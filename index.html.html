@@ -1,0 +1,963 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="">
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;700;900&amp;family=Nunito:wght@600;800;900&amp;display=swap" rel="stylesheet">
+<template id="__bundler_thumbnail"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><rect width="100" height="100" fill="#e0457b"/><circle cx="50" cy="50" r="22" fill="#fff"/><text x="50" y="58" text-anchor="middle" font-size="22" font-weight="900" fill="#e0457b">僕</text></svg></template>
+<style>
+body{margin:0;background:oklch(0.975 0.012 350);}
+*{box-sizing:border-box;}
+a{color:oklch(0.52 0.17 355);}
+a:hover{color:oklch(0.42 0.17 355);}
+button{font-family:inherit;color:inherit;}
+button:disabled{cursor:not-allowed;}
+@keyframes mlFloat{0%{transform:translateY(0) scale(.6);opacity:0}12%{opacity:1}100%{transform:translateY(-75vh) scale(1.15) rotate(12deg);opacity:0}}
+@keyframes mlPop{0%{transform:translate(-50%,-50%) scale(.3);opacity:0}25%{transform:translate(-50%,-50%) scale(1.15);opacity:1}70%{transform:translate(-50%,-60%) scale(1);opacity:1}100%{transform:translate(-50%,-90%) scale(1);opacity:0}}
+@keyframes mlToast{0%{transform:translate(-50%,-30px);opacity:0}10%{transform:translate(-50%,0);opacity:1}85%{transform:translate(-50%,0);opacity:1}100%{transform:translate(-50%,-30px);opacity:0}}
+@keyframes mlShake{0%,100%{transform:translateX(0)}25%{transform:translateX(-8px)}75%{transform:translateX(8px)}}
+</style>
+</helmet>
+<div style="min-height:100vh;background:oklch(0.975 0.012 350);color:oklch(0.3 0.05 350);font-family:'Nunito','Noto Sans TC',sans-serif;">
+{{ fx }}
+{{ toast }}
+<div style="max-width:760px;margin:0 auto;padding:18px 16px 56px;display:flex;flex-direction:column;gap:16px;">
+
+<header style="display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap;">
+  <button onClick="{{ goTitle }}" style="display:flex;align-items:center;gap:10px;background:none;border:none;padding:0;cursor:pointer;">
+    <span style="width:30px;height:30px;border-radius:50%;background:oklch(0.58 0.17 355);display:grid;place-items:center;color:white;font-weight:900;font-size:14px;box-shadow:0 0 0 3px oklch(0.93 0.04 355);">僕</span>
+    <span style="font-weight:900;font-size:18px;letter-spacing:0.02em;">女僕人生模擬器</span>
+  </button>
+  <div style="display:flex;gap:6px;flex-wrap:wrap;">
+    <button onClick="{{ toggleMusic }}" style="border:1.5px solid oklch(0.9 0.03 350);background:oklch(0.995 0.004 350);border-radius:999px;padding:7px 12px;font-size:13px;font-weight:700;cursor:pointer;" style-hover="background:oklch(0.93 0.04 355);">{{ musicLabel }}</button>
+    <button onClick="{{ toggleSound }}" style="border:1.5px solid oklch(0.9 0.03 350);background:oklch(0.995 0.004 350);border-radius:999px;padding:7px 12px;font-size:13px;font-weight:700;cursor:pointer;" style-hover="background:oklch(0.93 0.04 355);">{{ soundLabel }}</button>
+    <button onClick="{{ goAch }}" style="border:1.5px solid oklch(0.9 0.03 350);background:oklch(0.995 0.004 350);border-radius:999px;padding:7px 12px;font-size:13px;font-weight:700;cursor:pointer;" style-hover="background:oklch(0.93 0.04 355);">成就 {{ achCount }}</button>
+    <button onClick="{{ goBoard }}" style="border:1.5px solid oklch(0.9 0.03 350);background:oklch(0.995 0.004 350);border-radius:999px;padding:7px 12px;font-size:13px;font-weight:700;cursor:pointer;" style-hover="background:oklch(0.93 0.04 355);">排行榜</button>
+  </div>
+</header>
+
+<sc-if value="{{ isTitle }}" hint-placeholder-val="{{ true }}">
+<section style="background:oklch(0.995 0.004 350);border:1.5px solid oklch(0.9 0.03 350);border-radius:32px;box-shadow:0 8px 0 oklch(0.9 0.03 350);padding:clamp(28px,6vw,56px) clamp(20px,5vw,48px);display:flex;flex-direction:column;align-items:center;gap:24px;text-align:center;">
+  <div style="background:oklch(0.93 0.04 355);color:oklch(0.45 0.15 355);border-radius:999px;padding:6px 16px;font-size:13px;font-weight:900;letter-spacing:0.15em;">台北・大學生打工物語</div>
+  <h1 style="margin:0;font-size:clamp(44px,9vw,80px);font-weight:900;line-height:1.05;letter-spacing:0.02em;">女僕人生<br>模擬器</h1>
+  <p style="margin:0;max-width:28em;font-size:17px;line-height:1.75;color:oklch(0.45 0.04 350);text-wrap:pretty;">為了付房租，你在女僕咖啡廳開始打工。Jacky 哥、露露前輩、格子衫叔叔、房東阿媽……每個人都會記得你做過的事。十二個班之後，你會是地下偶像、僕吧紅牌，還是被二一？</p>
+  <div style="display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px;width:100%;max-width:480px;">
+    <div style="background:oklch(0.9 0.06 355);color:oklch(0.36 0.1 355);border-radius:16px;padding:14px 8px;display:flex;flex-direction:column;gap:4px;"><span style="font-weight:900;font-size:16px;">看板女僕</span><span style="font-size:12px;font-weight:700;">咖啡廳之光</span></div>
+    <div style="background:oklch(0.9 0.06 295);color:oklch(0.36 0.1 295);border-radius:16px;padding:14px 8px;display:flex;flex-direction:column;gap:4px;"><span style="font-weight:900;font-size:16px;">僕吧紅牌</span><span style="font-size:12px;font-weight:700;">靠公關吃飯</span></div>
+    <div style="background:oklch(0.9 0.06 60);color:oklch(0.36 0.1 60);border-radius:16px;padding:14px 8px;display:flex;flex-direction:column;gap:4px;"><span style="font-weight:900;font-size:16px;">地下偶像</span><span style="font-size:12px;font-weight:700;">靠表演出道</span></div>
+  </div>
+  <div style="display:flex;gap:12px;flex-wrap:wrap;justify-content:center;">
+    <button onClick="{{ goCreate }}" style="background:oklch(0.58 0.17 355);color:white;border:none;border-radius:16px;padding:16px 32px;font-size:18px;font-weight:900;cursor:pointer;box-shadow:0 5px 0 oklch(0.45 0.15 355);" style-active="transform:translateY(3px);box-shadow:0 2px 0 oklch(0.45 0.15 355);">開始打工</button>
+    <sc-if value="{{ hasSave }}" hint-placeholder-val="{{ false }}">
+      <button onClick="{{ loadSave }}" style="background:oklch(0.995 0.004 350);border:2px solid oklch(0.58 0.17 355);color:oklch(0.45 0.15 355);border-radius:16px;padding:14px 26px;font-size:17px;font-weight:900;cursor:pointer;" style-hover="background:oklch(0.93 0.04 355);">繼續（{{ saveInfo }}）</button>
+    </sc-if>
+  </div>
+  <div style="font-size:14px;color:oklch(0.48 0.04 350);">約 10 分鐘一輪・最高人氣 <b style="font-weight:900;color:oklch(0.3 0.05 350);">{{ best }}</b></div>
+</section>
+</sc-if>
+
+<sc-if value="{{ isCreate }}" hint-placeholder-val="{{ false }}">
+<section style="display:flex;flex-direction:column;gap:16px;">
+  <div style="display:flex;flex-direction:column;gap:6px;">
+    <h2 style="margin:0;font-size:30px;font-weight:900;">女僕面試</h2>
+    <span style="font-size:15px;color:oklch(0.48 0.04 350);">大二，租屋在公館，房租快繳不出來了。小雪店長說：「先取個女僕名吧。」</span>
+  </div>
+  <div style="background:oklch(0.995 0.004 350);border:1.5px solid oklch(0.9 0.03 350);border-radius:22px;box-shadow:0 6px 0 oklch(0.9 0.03 350);padding:20px;display:flex;flex-direction:column;gap:12px;">
+    <label style="font-weight:900;font-size:16px;">女僕名</label>
+    <div style="display:flex;gap:8px;flex-wrap:wrap;">
+      <input value="{{ name }}" onChange="{{ onName }}" placeholder="例如：小奶油" maxLength="10" style="flex:1 1 200px;min-width:0;border:2px solid oklch(0.9 0.03 350);border-radius:12px;padding:12px 14px;font-size:17px;font-family:inherit;color:inherit;background:oklch(0.985 0.008 350);outline:none;" style-focus="border-color:oklch(0.58 0.17 355);">
+      <button onClick="{{ randName }}" style="border:2px solid oklch(0.9 0.03 350);background:oklch(0.995 0.004 350);border-radius:12px;padding:10px 16px;font-size:15px;font-weight:700;cursor:pointer;" style-hover="background:oklch(0.93 0.04 355);">隨機</button>
+    </div>
+  </div>
+  <div style="background:oklch(0.995 0.004 350);border:1.5px solid oklch(0.9 0.03 350);border-radius:22px;box-shadow:0 6px 0 oklch(0.9 0.03 350);padding:20px;display:flex;flex-direction:column;gap:14px;">
+    <div style="display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap;">
+      <div style="font-weight:900;font-size:16px;">天賦配點<span style="margin-left:10px;font-size:15px;color:oklch(0.52 0.17 355);">剩 {{ remaining }} 點</span></div>
+    </div>
+    <div style="display:flex;flex-direction:column;gap:8px;">
+      <sc-for list="{{ allocRows }}" as="item" hint-placeholder-count="4">
+        <div style="display:flex;align-items:center;gap:12px;background:oklch(0.975 0.012 350);border-radius:14px;padding:10px 12px;">
+          <div style="flex:1;min-width:0;display:flex;flex-direction:column;gap:2px;">
+            <span style="font-weight:900;font-size:16px;">{{ item.label }}</span>
+            <span style="font-size:13px;color:oklch(0.48 0.04 350);">{{ item.desc }}</span>
+          </div>
+          <button onClick="{{ item.dec }}" style="width:44px;height:44px;border-radius:12px;border:2px solid oklch(0.9 0.03 350);background:oklch(0.995 0.004 350);font-size:20px;font-weight:900;cursor:pointer;opacity:{{ item.decOp }};">−</button>
+          <span style="width:28px;text-align:center;font-weight:900;font-size:20px;">{{ item.val }}</span>
+          <button onClick="{{ item.inc }}" style="width:44px;height:44px;border-radius:12px;border:none;background:oklch(0.58 0.17 355);color:white;font-size:20px;font-weight:900;cursor:pointer;opacity:{{ item.incOp }};">+</button>
+        </div>
+      </sc-for>
+    </div>
+    <div style="font-size:14px;line-height:1.6;color:oklch(0.45 0.04 350);">想當地偶就點表演，想當僕吧紅牌就點公關。顏值會讓所有人氣加成，抗壓決定你被奧客罵完還笑不笑得出來。</div>
+  </div>
+  <div style="display:flex;justify-content:flex-end;">
+    <button onClick="{{ startGame }}" style="background:oklch(0.58 0.17 355);color:white;border:none;border-radius:16px;padding:16px 32px;font-size:18px;font-weight:900;cursor:pointer;opacity:{{ startOp }};box-shadow:0 5px 0 oklch(0.45 0.15 355);" style-active="transform:translateY(3px);box-shadow:0 2px 0 oklch(0.45 0.15 355);">{{ startLabel }}</button>
+  </div>
+</section>
+</sc-if>
+
+<sc-if value="{{ inGame }}" hint-placeholder-val="{{ false }}">
+<section style="display:flex;flex-direction:column;gap:16px;">
+  <div style="background:oklch(0.995 0.004 350);border:1.5px solid oklch(0.9 0.03 350);border-radius:24px;box-shadow:0 6px 0 oklch(0.9 0.03 350);padding:16px 18px;display:flex;flex-direction:column;gap:14px;">
+    <div style="display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap;">
+      <div style="display:flex;align-items:center;gap:12px;min-width:0;">
+        <span style="flex:none;width:48px;height:48px;border-radius:50%;background:{{ outfitTint }};color:{{ outfitInk }};display:grid;place-items:center;font-weight:900;font-size:18px;border:3px solid {{ outfitInk }};">{{ initial }}</span>
+        <div style="display:flex;flex-direction:column;min-width:0;">
+          <span style="font-weight:900;font-size:20px;overflow-wrap:anywhere;">{{ pName }}</span>
+          <span style="font-size:13px;font-weight:700;color:oklch(0.48 0.12 355);">{{ titleName }}・{{ routeName }}</span>
+          <span style="font-size:12px;color:oklch(0.48 0.04 350);">穿著：{{ outfitName }}</span>
+        </div>
+      </div>
+      <div style="display:flex;flex-direction:column;align-items:flex-end;">
+        <span style="font-size:12px;font-weight:700;color:oklch(0.48 0.04 350);">人氣</span>
+        <span style="font-size:28px;font-weight:900;line-height:1;">{{ fans }}<span style="font-size:14px;color:oklch(0.48 0.04 350);"> / {{ goal }}</span></span>
+      </div>
+    </div>
+    <div style="display:flex;gap:4px;">
+      <sc-for list="{{ shiftDots }}" as="item" hint-placeholder-count="12">
+        <div style="flex:1;height:8px;border-radius:99px;background:{{ item.bg }};"></div>
+      </sc-for>
+    </div>
+    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:8px;">
+      <div style="background:oklch(0.975 0.012 350);border-radius:12px;padding:8px 12px;display:flex;flex-direction:column;gap:5px;">
+        <div style="display:flex;justify-content:space-between;font-size:12px;font-weight:700;"><span style="color:oklch(0.48 0.04 350);">精神</span><span style="color:{{ mentalColor }};">{{ mental }}</span></div>
+        <div style="height:7px;border-radius:99px;background:oklch(0.92 0.02 350);overflow:hidden;"><div style="height:100%;width:{{ mental }}%;background:{{ mentalColor }};border-radius:99px;"></div></div>
+      </div>
+      <div style="background:oklch(0.975 0.012 350);border-radius:12px;padding:8px 12px;display:flex;flex-direction:column;gap:5px;">
+        <div style="display:flex;justify-content:space-between;font-size:12px;font-weight:700;"><span style="color:oklch(0.48 0.04 350);">學業</span><span style="color:{{ studyColor }};">{{ study }}</span></div>
+        <div style="height:7px;border-radius:99px;background:oklch(0.92 0.02 350);overflow:hidden;"><div style="height:100%;width:{{ study }}%;background:{{ studyColor }};border-radius:99px;"></div></div>
+      </div>
+      <div style="background:oklch(0.975 0.012 350);border-radius:12px;padding:8px 12px;display:flex;justify-content:space-between;align-items:center;">
+        <span style="font-size:12px;font-weight:700;color:oklch(0.48 0.04 350);">存款</span><span style="font-size:16px;font-weight:900;color:{{ moneyColor }};">{{ moneyLabel }}</span>
+      </div>
+    </div>
+    <div style="display:flex;gap:6px;flex-wrap:wrap;">
+      <sc-for list="{{ statChips }}" as="item" hint-placeholder-count="4">
+        <span style="background:oklch(0.93 0.04 355);color:oklch(0.4 0.13 355);border-radius:999px;padding:5px 12px;font-size:13px;font-weight:900;">{{ item.label }} {{ item.val }}</span>
+      </sc-for>
+      <sc-if value="{{ hasBuff }}" hint-placeholder-val="{{ false }}">
+        <span style="background:oklch(0.92 0.07 80);color:oklch(0.4 0.1 70);border-radius:999px;padding:5px 12px;font-size:13px;font-weight:900;">應援手燈：下次人氣 ×1.5</span>
+      </sc-if>
+    </div>
+  </div>
+
+  <sc-if value="{{ isHub }}" hint-placeholder-val="{{ true }}">
+    <div style="background:oklch(0.995 0.004 350);border:1.5px solid oklch(0.9 0.03 350);border-radius:24px;box-shadow:0 6px 0 oklch(0.9 0.03 350);padding:20px;display:flex;flex-direction:column;gap:16px;">
+      <div style="display:flex;justify-content:space-between;align-items:baseline;gap:12px;flex-wrap:wrap;">
+        <h2 style="margin:0;font-size:24px;font-weight:900;">第 {{ shiftNo }} / {{ maxShifts }} 班</h2>
+        <span style="font-size:14px;color:oklch(0.48 0.04 350);">上班前，先做一件事</span>
+      </div>
+      <sc-if value="{{ shopOpen }}" hint-placeholder-val="{{ false }}">
+        <button onClick="{{ goShop }}" style="text-align:left;background:oklch(0.92 0.07 80);color:oklch(0.36 0.1 70);border:none;border-radius:16px;padding:14px 16px;cursor:pointer;display:flex;justify-content:space-between;align-items:center;gap:12px;" style-hover="filter:brightness(0.97);">
+          <span style="display:flex;flex-direction:column;gap:2px;"><span style="font-weight:900;font-size:17px;">週末商店街開門了</span><span style="font-size:13px;font-weight:700;">化妝品、應援道具、新服裝。每 3 班才開一次</span></span>
+          <span style="font-weight:900;font-size:15px;">去逛逛</span>
+        </button>
+      </sc-if>
+      <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:8px;">
+        <sc-for list="{{ preps }}" as="item" hint-placeholder-count="6">
+          <button onClick="{{ item.onClick }}" style="text-align:left;background:{{ item.bg }};border:2px solid {{ item.bd }};border-radius:14px;padding:11px 12px;cursor:pointer;display:flex;flex-direction:column;gap:3px;">
+            <span style="font-weight:900;font-size:15px;">{{ item.label }}</span>
+            <span style="font-size:12px;font-weight:700;color:oklch(0.45 0.04 350);">{{ item.desc }}</span>
+          </button>
+        </sc-for>
+      </div>
+      <div style="display:flex;flex-direction:column;gap:8px;">
+        <span style="font-size:14px;font-weight:900;color:oklch(0.48 0.12 355);">今天穿</span>
+        <div style="display:flex;gap:8px;flex-wrap:wrap;">
+          <sc-for list="{{ wardrobe }}" as="item" hint-placeholder-count="1">
+            <button onClick="{{ item.onClick }}" style="display:flex;align-items:center;gap:8px;background:{{ item.bg }};border:2px solid {{ item.bd }};border-radius:999px;padding:6px 14px 6px 6px;cursor:pointer;font-size:14px;font-weight:900;">
+              <span style="width:24px;height:24px;border-radius:50%;background:{{ item.tint }};border:2px solid {{ item.ink }};"></span>{{ item.name }}<span style="font-size:12px;font-weight:700;color:oklch(0.48 0.04 350);">{{ item.bonus }}</span>
+            </button>
+          </sc-for>
+        </div>
+      </div>
+      <div style="display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap;border-top:1.5px dashed oklch(0.9 0.03 350);padding-top:14px;">
+        <span style="font-size:13px;color:oklch(0.48 0.04 350);">每上一班：時薪 +NT$1,200・學業 −7・精神 −5</span>
+        <button onClick="{{ depart }}" style="background:oklch(0.58 0.17 355);color:white;border:none;border-radius:16px;padding:14px 26px;font-size:17px;font-weight:900;cursor:pointer;box-shadow:0 5px 0 oklch(0.45 0.15 355);" style-active="transform:translateY(3px);box-shadow:0 2px 0 oklch(0.45 0.15 355);">去上班</button>
+      </div>
+    </div>
+  </sc-if>
+
+  <sc-if value="{{ isShop }}" hint-placeholder-val="{{ false }}">
+    <div style="background:oklch(0.995 0.004 350);border:1.5px solid oklch(0.9 0.03 350);border-radius:24px;box-shadow:0 6px 0 oklch(0.9 0.03 350);overflow:hidden;">
+      <div style="background:oklch(0.92 0.07 80);color:oklch(0.36 0.1 70);padding:18px 20px;display:flex;justify-content:space-between;align-items:baseline;gap:12px;flex-wrap:wrap;">
+        <h2 style="margin:0;font-size:24px;font-weight:900;">週末商店街</h2>
+        <span style="font-size:15px;font-weight:900;">存款 {{ moneyLabel }}</span>
+      </div>
+      <div style="padding:18px 20px;display:flex;flex-direction:column;gap:16px;">
+        <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:10px;">
+          <sc-for list="{{ shopItems }}" as="item" hint-placeholder-count="4">
+            <div style="background:oklch(0.975 0.012 350);border-radius:16px;padding:14px;display:flex;flex-direction:column;gap:8px;">
+              <span style="font-weight:900;font-size:16px;">{{ item.name }}</span>
+              <span style="font-size:13px;line-height:1.5;color:oklch(0.45 0.04 350);flex:1;">{{ item.desc }}</span>
+              <button onClick="{{ item.onClick }}" disabled="{{ item.disabled }}" style="background:oklch(0.58 0.17 355);color:white;border:none;border-radius:12px;padding:10px;font-size:14px;font-weight:900;cursor:pointer;opacity:{{ item.op }};">{{ item.btn }}</button>
+            </div>
+          </sc-for>
+        </div>
+        <span style="font-size:15px;font-weight:900;">服裝</span>
+        <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:10px;">
+          <sc-for list="{{ outfitItems }}" as="item" hint-placeholder-count="3">
+            <div style="background:{{ item.tint }};color:{{ item.ink }};border-radius:16px;padding:14px;display:flex;flex-direction:column;gap:8px;">
+              <span style="font-weight:900;font-size:16px;">{{ item.name }}</span>
+              <span style="font-size:13px;font-weight:700;flex:1;">{{ item.bonus }}</span>
+              <button onClick="{{ item.onClick }}" disabled="{{ item.disabled }}" style="background:oklch(0.995 0.004 350);color:{{ item.ink }};border:none;border-radius:12px;padding:10px;font-size:14px;font-weight:900;cursor:pointer;opacity:{{ item.op }};">{{ item.btn }}</button>
+            </div>
+          </sc-for>
+        </div>
+        <div style="display:flex;justify-content:flex-end;">
+          <button onClick="{{ leaveShop }}" style="background:oklch(0.58 0.17 355);color:white;border:none;border-radius:14px;padding:12px 22px;font-size:16px;font-weight:900;cursor:pointer;">逛完了</button>
+        </div>
+      </div>
+    </div>
+  </sc-if>
+
+  <sc-if value="{{ isEvent }}" hint-placeholder-val="{{ false }}">
+    <div style="background:oklch(0.995 0.004 350);border:1.5px solid oklch(0.9 0.03 350);border-radius:24px;box-shadow:0 6px 0 oklch(0.9 0.03 350);overflow:hidden;">
+      <div style="background:{{ sceneBg }};padding:16px 18px 64px;display:flex;flex-direction:column;gap:12px;">
+        <div style="display:flex;justify-content:space-between;align-items:center;gap:8px;flex-wrap:wrap;">
+          <span style="background:{{ sceneChipBg }};color:{{ sceneChipInk }};border-radius:999px;padding:5px 12px;font-size:13px;font-weight:900;">{{ evPlace }}</span>
+          <span style="background:{{ sceneChipBg }};color:{{ sceneChipInk }};border-radius:999px;padding:5px 12px;font-size:13px;font-weight:900;">{{ evRel }}</span>
+        </div>
+        <div style="display:flex;justify-content:center;padding-top:6px;">
+          <div style="width:112px;height:112px;border-radius:50%;background:{{ evTint }};color:{{ evInk }};border:5px solid oklch(0.995 0.004 350);display:grid;place-items:center;font-size:44px;font-weight:900;box-shadow:0 6px 0 rgba(0,0,0,0.08);">{{ evInitial }}</div>
+        </div>
+      </div>
+      <div style="margin:-44px 14px 0;position:relative;background:oklch(0.995 0.004 350);border:2.5px solid {{ evInk }};border-radius:18px;padding:24px 18px 18px;">
+        <span style="position:absolute;top:-17px;left:16px;background:{{ evInk }};color:white;border-radius:10px;padding:6px 14px;font-weight:900;font-size:15px;">{{ evWho }}<span style="font-weight:700;font-size:12px;margin-left:6px;">{{ evTag }}</span></span>
+        <p style="margin:0;font-size:19px;line-height:1.75;font-weight:500;text-wrap:pretty;">{{ evText }}</p>
+      </div>
+      <div style="padding:16px 14px 18px;display:flex;flex-direction:column;gap:10px;">
+        <sc-for list="{{ choices }}" as="item" hint-placeholder-count="3">
+          <button onClick="{{ item.onClick }}" disabled="{{ item.disabled }}" style="text-align:left;background:oklch(0.995 0.004 350);border:2px solid oklch(0.9 0.03 350);border-radius:16px;padding:13px 16px;cursor:pointer;opacity:{{ item.op }};display:flex;flex-direction:column;gap:4px;" style-hover="border-color:oklch(0.58 0.17 355);background:oklch(0.97 0.02 355);">
+            <span style="font-weight:900;font-size:17px;">{{ item.label }}</span>
+            <span style="font-size:13px;font-weight:700;color:oklch(0.48 0.12 355);">{{ item.meta }}</span>
+          </button>
+        </sc-for>
+      </div>
+    </div>
+  </sc-if>
+
+  <sc-if value="{{ isMini }}" hint-placeholder-val="{{ false }}">
+    <div style="background:oklch(0.995 0.004 350);border:1.5px solid oklch(0.9 0.03 350);border-radius:24px;box-shadow:0 6px 0 oklch(0.9 0.03 350);overflow:hidden;">
+      <div style="background:{{ sceneBg }};padding:16px 20px;display:flex;justify-content:space-between;align-items:center;gap:8px;flex-wrap:wrap;">
+        <span style="font-size:22px;font-weight:900;color:{{ sceneChipInk }};">{{ miniTitle }}</span>
+        <span style="background:{{ sceneChipBg }};color:{{ sceneChipInk }};border-radius:999px;padding:5px 12px;font-size:13px;font-weight:900;">小遊戲・第 {{ evShift }} 班</span>
+      </div>
+      <div style="padding:20px;">{{ minigame }}</div>
+    </div>
+  </sc-if>
+
+  <sc-if value="{{ isResult }}" hint-placeholder-val="{{ false }}">
+    <div style="background:oklch(0.995 0.004 350);border:1.5px solid oklch(0.9 0.03 350);border-radius:24px;box-shadow:0 6px 0 oklch(0.9 0.03 350);padding:22px 20px;display:flex;flex-direction:column;gap:14px;">
+      <div style="display:flex;align-items:center;gap:12px;flex-wrap:wrap;">
+        <span style="background:{{ resColor }};color:white;border-radius:12px;padding:6px 14px;font-size:22px;font-weight:900;transform:rotate(-3deg);">{{ resVerdict }}</span>
+        <span style="font-size:14px;font-weight:700;color:oklch(0.48 0.04 350);">{{ resOdds }}</span>
+      </div>
+      <div style="font-size:15px;font-weight:700;color:oklch(0.45 0.04 350);">{{ resChoice }}</div>
+      <p style="margin:0;font-size:19px;line-height:1.75;font-weight:500;text-wrap:pretty;">{{ resText }}</p>
+      <div style="display:flex;gap:8px;flex-wrap:wrap;">
+        <sc-for list="{{ resDeltas }}" as="item" hint-placeholder-count="3">
+          <span style="background:{{ item.bg }};color:{{ item.ink }};border-radius:999px;padding:6px 12px;font-size:14px;font-weight:900;">{{ item.label }} {{ item.val }}</span>
+        </sc-for>
+      </div>
+      <div style="display:flex;justify-content:flex-end;">
+        <button onClick="{{ goContinue }}" style="background:oklch(0.58 0.17 355);color:white;border:none;border-radius:16px;padding:14px 26px;font-size:17px;font-weight:900;cursor:pointer;box-shadow:0 5px 0 oklch(0.45 0.15 355);" style-active="transform:translateY(3px);box-shadow:0 2px 0 oklch(0.45 0.15 355);">{{ continueLabel }}</button>
+      </div>
+    </div>
+  </sc-if>
+
+  <sc-if value="{{ isRoute }}" hint-placeholder-val="{{ false }}">
+    <div style="background:oklch(0.995 0.004 350);border:1.5px solid oklch(0.9 0.03 350);border-radius:24px;box-shadow:0 6px 0 oklch(0.9 0.03 350);overflow:hidden;">
+      <div style="background:oklch(0.92 0.05 200);padding:16px 18px 60px;display:flex;justify-content:center;">
+        <div style="width:100px;height:100px;border-radius:50%;background:oklch(0.89 0.065 200);color:oklch(0.36 0.1 200);border:5px solid oklch(0.995 0.004 350);display:grid;place-items:center;font-size:40px;font-weight:900;">雪</div>
+      </div>
+      <div style="margin:-40px 14px 0;position:relative;background:oklch(0.995 0.004 350);border:2.5px solid oklch(0.36 0.1 200);border-radius:18px;padding:24px 18px 18px;">
+        <span style="position:absolute;top:-17px;left:16px;background:oklch(0.36 0.1 200);color:white;border-radius:10px;padding:6px 14px;font-weight:900;font-size:15px;">小雪店長<span style="font-weight:700;font-size:12px;margin-left:6px;">人生轉折</span></span>
+        <p style="margin:0;font-size:18px;line-height:1.75;text-wrap:pretty;">{{ routeText }}</p>
+      </div>
+      <div style="padding:16px 14px 18px;display:flex;flex-direction:column;gap:10px;">
+        <sc-for list="{{ routes }}" as="item" hint-placeholder-count="3">
+          <button onClick="{{ item.onClick }}" style="text-align:left;background:{{ item.tint }};color:{{ item.ink }};border:none;border-radius:18px;padding:16px 18px;cursor:pointer;display:flex;flex-direction:column;gap:4px;" style-hover="filter:brightness(0.97);">
+            <span style="display:flex;justify-content:space-between;gap:8px;flex-wrap:wrap;"><span style="font-weight:900;font-size:19px;">{{ item.label }}</span><span style="font-size:13px;font-weight:900;">{{ item.fit }}</span></span>
+            <span style="font-size:14px;line-height:1.5;">{{ item.desc }}</span>
+            <span style="font-size:13px;font-weight:900;">{{ item.req }}</span>
+          </button>
+        </sc-for>
+      </div>
+    </div>
+  </sc-if>
+
+  <div style="background:oklch(0.995 0.004 350);border:1.5px solid oklch(0.9 0.03 350);border-radius:22px;padding:16px 18px;display:flex;flex-direction:column;gap:10px;">
+    <div style="font-weight:900;font-size:15px;">人物關係</div>
+    <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:8px;">
+      <sc-for list="{{ people }}" as="item" hint-placeholder-count="7">
+        <div style="display:flex;gap:10px;align-items:center;background:oklch(0.975 0.012 350);border-radius:14px;padding:8px 10px;opacity:{{ item.op }};">
+          <span style="flex:none;width:36px;height:36px;border-radius:50%;background:{{ item.tint }};color:{{ item.ink }};display:grid;place-items:center;font-weight:900;font-size:15px;">{{ item.initial }}</span>
+          <div style="flex:1;min-width:0;display:flex;flex-direction:column;gap:4px;">
+            <div style="display:flex;justify-content:space-between;gap:6px;font-size:13px;"><span style="font-weight:900;">{{ item.name }}</span><span style="font-weight:700;color:oklch(0.45 0.04 350);">{{ item.label }}</span></div>
+            <div style="height:6px;border-radius:99px;background:oklch(0.92 0.02 350);overflow:hidden;"><div style="height:100%;width:{{ item.pct }}%;background:{{ item.bar }};border-radius:99px;"></div></div>
+          </div>
+        </div>
+      </sc-for>
+    </div>
+  </div>
+
+  <div style="background:oklch(0.995 0.004 350);border:1.5px solid oklch(0.9 0.03 350);border-radius:22px;padding:16px 18px;display:flex;flex-direction:column;gap:8px;">
+    <div style="font-weight:900;font-size:15px;">打工日記</div>
+    <sc-if value="{{ noLog }}" hint-placeholder-val="{{ false }}">
+      <div style="font-size:14px;color:oklch(0.48 0.04 350);">還沒開始上班。</div>
+    </sc-if>
+    <sc-for list="{{ log }}" as="item" hint-placeholder-count="3">
+      <div style="display:flex;gap:10px;align-items:baseline;font-size:14px;line-height:1.6;border-bottom:1px solid oklch(0.94 0.02 350);padding-bottom:6px;">
+        <span style="flex:none;min-width:48px;font-weight:900;color:oklch(0.52 0.17 355);">{{ item.tag }}</span>
+        <span style="text-wrap:pretty;">{{ item.txt }}</span>
+      </div>
+    </sc-for>
+  </div>
+</section>
+</sc-if>
+
+<sc-if value="{{ isEnding }}" hint-placeholder-val="{{ false }}">
+<section style="display:flex;flex-direction:column;align-items:center;gap:20px;">
+  <div style="width:100%;max-width:520px;background:{{ endTint }};color:{{ endInk }};border-radius:28px;padding:28px;display:flex;flex-direction:column;gap:16px;box-shadow:0 8px 0 oklch(0.88 0.04 350);">
+    <div style="display:flex;justify-content:space-between;align-items:center;gap:8px;">
+      <span style="font-size:13px;font-weight:900;letter-spacing:0.15em;">女僕人生模擬器・結局</span>
+      <sc-if value="{{ isNewBest }}" hint-placeholder-val="{{ false }}">
+        <span style="background:oklch(0.995 0.004 350);color:oklch(0.45 0.15 355);border-radius:999px;padding:4px 10px;font-size:12px;font-weight:900;">新紀錄</span>
+      </sc-if>
+    </div>
+    <h2 style="margin:0;font-size:clamp(34px,7vw,48px);font-weight:900;line-height:1.1;">{{ endTitle }}</h2>
+    <p style="margin:0;font-size:17px;line-height:1.7;font-weight:500;text-wrap:pretty;">{{ endText }}</p>
+    <div style="background:oklch(0.995 0.004 350);color:oklch(0.3 0.05 350);border-radius:18px;padding:16px;display:grid;grid-template-columns:1fr 1fr;gap:12px;">
+      <div style="grid-column:1 / -1;display:flex;justify-content:space-between;align-items:baseline;gap:8px;border-bottom:1.5px dashed oklch(0.9 0.03 350);padding-bottom:10px;"><span style="font-weight:900;font-size:18px;overflow-wrap:anywhere;">{{ endName }}</span><span style="font-size:13px;color:oklch(0.48 0.04 350);">{{ endRoute }}</span></div>
+      <div style="display:flex;flex-direction:column;"><span style="font-size:12px;color:oklch(0.48 0.04 350);font-weight:700;">人氣</span><span style="font-size:24px;font-weight:900;">{{ endFans }}</span></div>
+      <div style="display:flex;flex-direction:column;"><span style="font-size:12px;color:oklch(0.48 0.04 350);font-weight:700;">上了幾班</span><span style="font-size:24px;font-weight:900;">{{ endShifts }}</span></div>
+      <div style="display:flex;flex-direction:column;"><span style="font-size:12px;color:oklch(0.48 0.04 350);font-weight:700;">存款</span><span style="font-size:18px;font-weight:900;">{{ endMoney }}</span></div>
+      <div style="display:flex;flex-direction:column;"><span style="font-size:12px;color:oklch(0.48 0.04 350);font-weight:700;">最好的關係</span><span style="font-size:18px;font-weight:900;">{{ endBond }}</span></div>
+    </div>
+    <div style="font-size:15px;font-weight:700;">「{{ endEpitaph }}」</div>
+  </div>
+  <div style="display:flex;gap:10px;flex-wrap:wrap;justify-content:center;">
+    <button onClick="{{ onCopy }}" style="border:2px solid oklch(0.58 0.17 355);background:oklch(0.995 0.004 350);color:oklch(0.45 0.15 355);border-radius:16px;padding:14px 22px;font-size:16px;font-weight:900;cursor:pointer;" style-hover="background:oklch(0.93 0.04 355);">{{ copyLabel }}</button>
+    <button onClick="{{ goCreate }}" style="background:oklch(0.58 0.17 355);color:white;border:none;border-radius:16px;padding:14px 26px;font-size:16px;font-weight:900;cursor:pointer;box-shadow:0 5px 0 oklch(0.45 0.15 355);">再打一次工</button>
+    <button onClick="{{ goAch }}" style="border:2px solid oklch(0.9 0.03 350);background:oklch(0.995 0.004 350);border-radius:16px;padding:14px 22px;font-size:16px;font-weight:900;cursor:pointer;">成就</button>
+  </div>
+</section>
+</sc-if>
+
+<sc-if value="{{ isAch }}" hint-placeholder-val="{{ false }}">
+<section style="background:oklch(0.995 0.004 350);border:1.5px solid oklch(0.9 0.03 350);border-radius:24px;box-shadow:0 6px 0 oklch(0.9 0.03 350);padding:22px;display:flex;flex-direction:column;gap:14px;">
+  <div style="display:flex;justify-content:space-between;align-items:baseline;gap:12px;flex-wrap:wrap;">
+    <h2 style="margin:0;font-size:28px;font-weight:900;">成就・稱號</h2>
+    <span style="font-size:15px;font-weight:900;color:oklch(0.52 0.17 355);">{{ achCount }}</span>
+  </div>
+  <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:10px;">
+    <sc-for list="{{ achRows }}" as="item" hint-placeholder-count="13">
+      <div style="background:{{ item.bg }};color:{{ item.ink }};border-radius:16px;padding:14px;display:flex;flex-direction:column;gap:4px;">
+        <span style="font-size:12px;font-weight:900;">{{ item.badge }}</span>
+        <span style="font-weight:900;font-size:17px;">{{ item.name }}</span>
+        <span style="font-size:13px;line-height:1.5;">{{ item.desc }}</span>
+      </div>
+    </sc-for>
+  </div>
+  <div style="display:flex;justify-content:flex-end;">
+    <button onClick="{{ boardBack }}" style="background:oklch(0.58 0.17 355);color:white;border:none;border-radius:14px;padding:12px 22px;font-size:16px;font-weight:900;cursor:pointer;">返回</button>
+  </div>
+</section>
+</sc-if>
+
+<sc-if value="{{ isBoard }}" hint-placeholder-val="{{ false }}">
+<section style="background:oklch(0.995 0.004 350);border:1.5px solid oklch(0.9 0.03 350);border-radius:24px;box-shadow:0 6px 0 oklch(0.9 0.03 350);padding:22px;display:flex;flex-direction:column;gap:10px;">
+  <div style="display:flex;justify-content:space-between;align-items:baseline;gap:12px;flex-wrap:wrap;">
+    <h2 style="margin:0;font-size:28px;font-weight:900;">人氣女僕排行榜</h2>
+    <span style="font-size:13px;color:oklch(0.48 0.04 350);">依人氣排序</span>
+  </div>
+  <sc-for list="{{ boardRows }}" as="item" hint-placeholder-count="8">
+    <div style="display:grid;grid-template-columns:36px minmax(0,1fr) auto;gap:10px;align-items:center;background:{{ item.bg }};border-radius:14px;padding:10px 12px;">
+      <span style="font-weight:900;font-size:18px;color:oklch(0.52 0.17 355);text-align:center;">{{ item.rank }}</span>
+      <div style="display:flex;flex-direction:column;min-width:0;">
+        <span style="font-weight:900;font-size:16px;overflow-wrap:anywhere;">{{ item.name }}</span>
+        <span style="font-size:12px;color:oklch(0.48 0.04 350);">{{ item.ending }}</span>
+      </div>
+      <span style="font-weight:900;font-size:20px;">{{ item.fans }}</span>
+    </div>
+  </sc-for>
+  <div style="display:flex;justify-content:flex-end;padding-top:6px;">
+    <button onClick="{{ boardBack }}" style="background:oklch(0.58 0.17 355);color:white;border:none;border-radius:14px;padding:12px 22px;font-size:16px;font-weight:900;cursor:pointer;">返回</button>
+  </div>
+</section>
+</sc-if>
+
+</div>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{&quot;maxShifts&quot;:{&quot;editor&quot;:&quot;int&quot;,&quot;default&quot;:12,&quot;min&quot;:8,&quot;max&quot;:20,&quot;tsType&quot;:&quot;number&quot;,&quot;section&quot;:&quot;遊戲平衡&quot;},&quot;fanGoal&quot;:{&quot;editor&quot;:&quot;int&quot;,&quot;default&quot;:320,&quot;min&quot;:150,&quot;max&quot;:600,&quot;step&quot;:10,&quot;tsType&quot;:&quot;number&quot;,&quot;section&quot;:&quot;遊戲平衡&quot;},&quot;startPoints&quot;:{&quot;editor&quot;:&quot;int&quot;,&quot;default&quot;:16,&quot;min&quot;:8,&quot;max&quot;:32,&quot;tsType&quot;:&quot;number&quot;,&quot;section&quot;:&quot;遊戲平衡&quot;},&quot;showOdds&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:true,&quot;tsType&quot;:&quot;boolean&quot;,&quot;section&quot;:&quot;遊戲平衡&quot;}}">
+const SAVE_KEY='maidlife2_save',BEST_KEY='maidlife2_best',BOARD_KEY='maidlife2_board',SOUND_KEY='maidlife2_sound',MUSIC_KEY='maidlife2_music',ACH_KEY='maidlife2_ach';
+const h=React.createElement;
+const STATS=[['look','顏值','人氣加成，拍立得殺手'],['perform','表演','唱跳、畫蛋包飯，地偶必備'],['social','公關','話術與接客，僕吧紅牌必備'],['grit','抗壓','面對奧客與變態的心理素質']];
+const SN={look:'顏值',perform:'表演',social:'公關',grit:'抗壓'};
+const NAMES=['小奶油','莓莓','雪球','糖霜','布蕾','蜜桃','可可','棉花糖'];
+const CHARS={
+ jacky:{name:'Jacky 哥',init:'J',role:'傳說大佬',hue:70},
+ lulu:{name:'露露前輩',init:'露',role:'看板女僕',hue:340},
+ yuki:{name:'小雪店長',init:'雪',role:'店長',hue:200},
+ senpai:{name:'阿哲學長',init:'哲',role:'同校學長',hue:150},
+ creep:{name:'格子衫叔叔',init:'格',role:'危險人物',hue:300,danger:true},
+ granny:{name:'房東阿媽',init:'房',role:'房東',hue:40},
+ mom:{name:'媽媽',init:'媽',role:'家人',hue:20}
+};
+const HUE={'大佬':20,'奧客':30,'舞台':355,'新人':150,'評審':60,'醉客':250,'店長':270,'粉絲':340,'室友':180,'日常':230,'變態':300,'學校':230};
+const OUTFITS=[
+ {id:'classic',name:'經典黑白女僕裝',price:0,bonus:{},hue:250,txt:'無加成・初心'},
+ {id:'goth',name:'哥德黑女僕裝',price:6000,bonus:{social:2,grit:1},hue:300,txt:'公關 +2・抗壓 +1'},
+ {id:'idol',name:'偶像舞台裝',price:8000,bonus:{perform:2,look:1},hue:60,txt:'表演 +2・顏值 +1'}
+];
+const SHOP=[
+ {id:'cos',name:'專櫃化妝品',price:1500,desc:'顏值 +1。櫃姐說你皮膚很好（她對每個人都這樣說）。',eff:{look:1}},
+ {id:'drink',name:'能量飲料',price:300,desc:'精神 +15。心跳會有點快，正常的。',eff:{mt:15}},
+ {id:'light',name:'應援手燈',price:1000,desc:'下一次獲得的人氣 ×1.5。發光的東西都很有說服力。',eff:{buff:1}},
+ {id:'notes',name:'學長的考古題',price:500,desc:'學業 +20。上面有學長的螢光筆畫線。',eff:{st:20}}
+];
+const ACH=[
+ ['first','初次營業','完成第一班'],
+ ['heart','番茄醬畫家','畫愛心拿到 85 分以上'],
+ ['rhythm','節奏天后','跳舞拿到 85 分以上'],
+ ['deliver','送餐飛毛腿','送餐拿到 85 分以上'],
+ ['jacky','Jacky 哥的心頭好','Jacky 哥好感達到 80'],
+ ['lulu','從對手到靠山','露露前輩好感達到 80'],
+ ['creep','我不是好欺負的','擊退跟蹤的格子衫叔叔'],
+ ['closet','衣櫃滿了','擁有全部服裝'],
+ ['rich','小富婆','存款達到 NT$20,000'],
+ ['love','女僕也想談戀愛','答應學長的告白'],
+ ['dream','夢想成真','達成任一路線的成功結局'],
+ ['scholar','學霸女僕','學業 80 以上完成一輪'],
+ ['dark','黑歷史','被二一或心累離職']
+];
+const FAKE=[['露露',520,'傳說看板女僕'],['甜點戰隊・莓果',466,'地下偶像出道'],['夜蝶',430,'僕吧紅牌'],['可可亞',350,'僕吧紅牌'],['小餅乾',240,'平凡畢業'],['焦糖',160,'地偶糊咖'],['抹茶',96,'心累離職'],['芋圓',44,'被二一退學']];
+const ROUTES={
+ cafe:{name:'咖啡廳路線',label:'留在咖啡廳',target:'傳說看板女僕',hue:355,stat:null,desc:'跟著小雪店長，目標成為全台北最有名的看板女僕。',req:'需要：人氣達標'},
+ bar:{name:'僕吧路線',label:'晚上去女僕酒吧兼職',target:'僕吧紅牌',hue:295,stat:'social',desc:'燈光暗、酒很貴、客人很會花。靠嘴巴吃飯的地方。',req:'需要：人氣達標・公關 8 以上（含服裝）'},
+ idol:{name:'地偶路線',label:'參加地下偶像甄選',target:'地下偶像',hue:60,stat:'perform',desc:'甜點戰隊在招新成員。從托盤換成麥克風。',req:'需要：人氣達標・表演 8 以上（含服裝）'}
+};
+const SCENE={
+ cafe:{name:'女僕咖啡廳',bg:'radial-gradient(circle at 12px 12px, oklch(0.97 0.02 355) 0 4px, transparent 5px) 0 0/36px 36px, oklch(0.92 0.05 355)',chip:'oklch(0.995 0.004 350)',ink:'oklch(0.42 0.14 355)'},
+ bar:{name:'女僕酒吧',bg:'radial-gradient(circle at 12px 12px, oklch(0.45 0.1 300) 0 2px, transparent 3px) 0 0/30px 30px, oklch(0.32 0.07 300)',chip:'oklch(0.45 0.12 300)',ink:'oklch(0.97 0.02 300)'},
+ stage:{name:'Livehouse',bg:'radial-gradient(circle at 12px 12px, oklch(0.96 0.05 80) 0 4px, transparent 5px) 0 0/36px 36px, oklch(0.9 0.08 75)',chip:'oklch(0.995 0.004 350)',ink:'oklch(0.42 0.1 70)'},
+ life:{name:'日常',bg:'radial-gradient(circle at 12px 12px, oklch(0.97 0.015 230) 0 4px, transparent 5px) 0 0/36px 36px, oklch(0.93 0.035 230)',chip:'oklch(0.995 0.004 350)',ink:'oklch(0.4 0.09 230)'}
+};
+const E=(id,pool,place,who,tag,text,ch,need)=>({id,pool,place,who,tag,text,ch,need});
+const EVENTS=[
+ E('jacky1','early','cafe','jacky','','傳說中的大佬 Jacky 哥坐下了。他一年開的香檳比你的學費還多。他看著菜單說：「新人？表演一個來看看。」',[
+  {t:'唱一段萌萌應援曲',stat:'perform',dc:1,ok:{fan:20,m:1000,rel:{jacky:20},txt:'Jacky 哥拍手叫好，當場加點拍立得。前輩們的眼神有點複雜。'},ng:{fan:3,mt:-8,rel:{jacky:5},txt:'你唱到破音。Jacky 哥：「沒關係，新人嘛。」寬容比嘲笑還痛。'}},
+  {t:'用話術撒嬌',stat:'social',dc:1,ok:{fan:15,m:1500,rel:{jacky:15},txt:'一句「主人今天也好帥喔～」，他開了一瓶香檳。你學會了資本主義。'},ng:{fan:2,rel:{jacky:3},txt:'你講得太僵硬，他以為你在念課文。'}},
+  {t:'老實說：「我還在學，請多指教」',stat:'grit',dc:0,ok:{fan:10,mt:5,rel:{jacky:25},txt:'他說就喜歡老實的孩子。你獲得了第一位熟客。'},ng:{fan:4,rel:{jacky:5},txt:'他點點頭，然後指名了露露前輩。'}}]),
+ E('creep1','early','cafe','creep','','一位格子衫叔叔一直想碰你的手，還問：「下班後可以一起吃飯嗎？」',[
+  {t:'笑著用托盤擋住',stat:'social',dc:1,ok:{fan:8,rel:{creep:10},txt:'托盤是女僕的盾牌。你保住了尊嚴和營業笑容。'},ng:{mt:-12,rel:{creep:20},txt:'他得寸進尺，你只好躲進廚房。手在抖。'}},
+  {t:'直接叫店長',ok:{fan:3,mt:5,rel:{yuki:15,creep:10},txt:'小雪店長三秒內抵達，他被請出門。店長說：「做得好，這種的不用忍。」'}},
+  {t:'冷冷地說：「主人，請自重。」',stat:'grit',dc:1,ok:{fan:12,mt:3,rel:{creep:10},txt:'全店安靜，然後隔壁桌鼓掌。你多了一群護衛粉。'},ng:{mt:-8,rel:{creep:20},txt:'你的聲音太小，他沒聽到。或是假裝沒聽到。'}}]),
+ E('lulu1','early','cafe','lulu','','人氣第一的露露前輩把你拉到一旁：「新人，你今天的妝……要不要我幫你？」',[
+  {t:'虛心請教',ok:{look:1,mt:3,rel:{lulu:15},txt:'露露教你畫眼線。原來前輩不是壞人，只是講話很直。'}},
+  {t:'「我覺得我的妝很好。」',stat:'grit',dc:1,ok:{fan:6,rel:{lulu:10},txt:'露露挑眉：「有骨氣。」她開始用另一種眼光看你。'},ng:{mt:-8,rel:{lulu:2},txt:'她聳聳肩走了。休息室的空氣冷了三度。'}},
+  {t:'偷學她的營業技巧',stat:'social',dc:1,ok:{social:1,fan:5,rel:{lulu:5},txt:'觀察一整晚，你學到「眨眼的時機」這門學問。'},ng:{mt:-3,rel:{lulu:2},txt:'你偷看得太明顯，被她抓到。尷尬。'}}]),
+ E('senpai1','early','cafe','senpai','','一位看起來比你還緊張的男生，小聲說想跟你拍拍立得。你覺得他很眼熟……是同系的阿哲學長！',[
+  {t:'熱情比愛心',stat:'look',dc:0,ok:{fan:10,m:300,rel:{senpai:20},txt:'他拿到拍立得的瞬間眼眶泛淚。你可能剛創造了一位大佬。'},ng:{fan:4,rel:{senpai:8},txt:'你比的愛心被他的手擋住一半。'}},
+  {t:'假裝不認識他',stat:'grit',dc:1,ok:{fan:6,rel:{senpai:10},txt:'他也假裝不認識你。這就是大學生的默契。'},ng:{mt:-6,rel:{senpai:5},txt:'他大聲說：「咦？你不是坐我後面那個——」全店轉頭。'}},
+  {t:'聊天聊到他借你考古題',stat:'social',dc:1,ok:{st:12,rel:{senpai:22},txt:'女僕店最實用的一次邂逅。'},ng:{mt:-4,rel:{senpai:5},txt:'他說在學校會假裝不認識你。你也希望如此。'}}]),
+ E('yuki1','early','cafe','yuki','','打烊後，小雪店長一個人在算帳，眉頭皺得很緊。',[
+  {t:'留下來幫忙',stat:'grit',dc:0,ok:{mt:-4,rel:{yuki:22},txt:'她說這個月營收不太好，但有你在，她安心多了。'},ng:{mt:-8,rel:{yuki:10},txt:'你算錯三次。店長笑了，說還是她來。'}},
+  {t:'買宵夜給她',ok:{m:-200,mt:3,rel:{yuki:15},txt:'一碗滷味，兩個人，安靜地吃完。'}},
+  {t:'先下班，明天早八',ok:{mt:5,st:5,txt:'你準時睡覺了。這在大學生裡很稀有。'}}]),
+ E('karen','early','cafe','奧客阿姨','奧客','一位阿姨拍桌：「蛋包飯上的愛心畫歪了！我要客訴！還有，你們為什麼叫我主人？」',[
+  {t:'重畫一顆完美愛心',stat:'perform',dc:1,ok:{fan:8,txt:'你畫了一顆對稱到能放進教科書的愛心。阿姨默默拍照上傳。'},ng:{mt:-6,txt:'第二顆更歪。阿姨留了一星：「女僕手殘」。'}},
+  {t:'耐心解釋女僕文化',stat:'social',dc:2,ok:{fan:12,txt:'阿姨聽完說：「那我也要拍立得。」她變成了你的客人。'},ng:{mt:-10,txt:'你解釋了十分鐘，她說要找你們老闆。'}},
+  {t:'自掏腰包送她飲料',ok:{m:-200,mt:-2,fan:3,txt:'阿姨滿意離開，你的錢包不滿意。'}}]),
+ E('stage','early','stage','全場主人','舞台','今天輪到你上台跳舞！音樂下了，台下二十雙眼睛盯著你。',[
+  {t:'照練習的跳',stat:'perform',dc:1,ok:{fan:18,txt:'完美。你聽見有人小聲說：「這新人可以。」'},ng:{fan:4,mt:-6,txt:'你轉圈轉到撞上麥克風架。笑聲很溫暖，你很想死。'}},
+  {t:'即興加入搞笑動作',stat:'social',dc:2,ok:{fan:22,txt:'全場笑翻，有人上傳影片，標題是「女僕店出了個諧星」。'},ng:{fan:2,mt:-6,txt:'沒人笑。音樂很長。'}},
+  {t:'裝病逃走',ok:{mt:4,fan:-5,rel:{yuki:-5},txt:'你躲在休息室吃布丁。店長的眼神寫著「下不為例」。'}}]),
+ E('trainee','any','cafe','慌張新人','新人','店裡來了個比你還慌的新人，第一天就把咖啡灑在客人身上。',[
+  {t:'挺身而出幫她道歉',stat:'social',dc:1,ok:{fan:18,mt:3,rel:{yuki:8},txt:'客人笑著說沒事，還記住了你的名字。新人叫你「師父」。'},ng:{fan:5,mt:-8,txt:'你道歉道到一半，也把水打翻了。'}},
+  {t:'手把手教她',stat:'grit',dc:1,ok:{fan:12,social:1,txt:'教人的時候，你發現自己也進步了。'},ng:{mt:-10,txt:'她一直哭，你也想哭。'}},
+  {t:'假裝沒看到',ok:{fan:-5,mt:-3,txt:'新人哭著跑進廚房。你的良心有點痛。'}}]),
+ E('jacky2','any','cafe','jacky','','Jacky 哥又來了，這次直接指名你：「上次那個{n}呢？叫她過來。」',[
+  {t:'小跑步過去：「主人歡迎回來～」',stat:'look',dc:0,ok:{fan:16,m:1000,rel:{jacky:12},txt:'他笑得像過年。今天的香檳是粉紅色的。'},ng:{fan:5,rel:{jacky:5},txt:'你跑太快，差點撞翻他的香檳。他接住了，很帥。'}},
+  {t:'問他今天過得好不好',stat:'social',dc:1,ok:{fan:10,rel:{jacky:22},txt:'他愣了一下，說很久沒人問他這個了。'},ng:{rel:{jacky:5},txt:'他說：「還好。」然後聊了三十分鐘股票。'}},
+  {t:'故意晾他一下',stat:'grit',dc:2,ok:{fan:22,rel:{jacky:15},txt:'欲擒故縱。他點了更多。'},ng:{fan:-5,rel:{jacky:-10},txt:'他指名了露露。你在角落擦杯子。'}}],{met:'jacky'}),
+ E('jacky3','any','cafe','jacky','','Jacky 哥說他要調職去上海了，今天是最後一次來。他點了一杯最便宜的紅茶。',[
+  {t:'為他唱最後一首歌',stat:'perform',dc:1,ok:{fan:45,rel:{jacky:20},txt:'他哭了。大佬也會哭。他說之後回台灣，第一站一定來這裡。'},ng:{fan:20,rel:{jacky:10},txt:'你唱到一半自己先哭了。他笑著遞面紙給你。'}},
+  {t:'送他一張親筆拍立得',ok:{fan:25,mt:5,rel:{jacky:15},txt:'「主人要記得回家喔。」他把拍立得放進皮夾最裡面。'}},
+  {t:'「主人，上海也有女僕店喔。」',stat:'social',dc:1,ok:{fan:35,rel:{jacky:15},txt:'他大笑：「但沒有你。」然後開了今晚最後一瓶香檳。'},ng:{fan:12,rel:{jacky:-5},txt:'他說：「……你真的很會破壞氣氛。」'}}],{rel:['jacky',50]}),
+ E('lulu2','any','cafe','yuki','','小雪店長宣布：「下個月的看板女僕，會從{n}和露露之間選一個。」露露前輩看了你一眼。',[
+  {t:'拚業績',stat:'social',dc:2,ok:{fan:30,m:2000,rel:{lulu:-5},txt:'你一晚賣出四十張拍立得。露露傳訊息：「你很可怕。」'},ng:{fan:8,mt:-10,txt:'你太拚了，客人覺得壓力很大。'}},
+  {t:'練一支全新的舞',stat:'perform',dc:2,ok:{fan:30,txt:'新舞一出，影片在 Threads 上被轉了兩千次。'},ng:{fan:6,mt:-8,txt:'你在練習室扭到腰。'}},
+  {t:'「露露前輩比較適合。」',ok:{fan:8,mt:10,rel:{lulu:30},txt:'露露驚訝地看著你。那天之後，她開始罩你。'}}],{met:'lulu'}),
+ E('lulu3','any','cafe','lulu','','露露前輩被奧客罵到躲進休息室哭。她平常那麼強勢，你第一次看到她這樣。',[
+  {t:'進去陪她',stat:'social',dc:0,ok:{mt:-3,rel:{lulu:25},txt:'她說：「謝謝你，學妹。」從那天起她都叫你學妹。'},ng:{rel:{lulu:12},txt:'你不知道該說什麼，只好遞布丁。她吃了。'}},
+  {t:'出去幫她應付奧客',stat:'grit',dc:2,ok:{fan:15,rel:{lulu:30},txt:'你用最甜的笑容把奧客請走了。露露在門後看著。'},ng:{mt:-10,rel:{lulu:15},txt:'你也被罵哭了。兩個人一起在休息室吃布丁。'}},
+  {t:'假裝沒看到',ok:{rel:{lulu:-10},txt:'休息室的門關著。你在外面多接了一桌客人。'}}],{rel:['lulu',35]}),
+ E('creep2','any','cafe','creep','','格子衫叔叔又來了。他送你一個禮物——用你的照片做的抱枕。',[
+  {t:'當場拒收',stat:'grit',dc:1,ok:{fan:10,mt:2,rel:{creep:5},txt:'你把抱枕推回去：「主人，這個不行喔。」語氣甜，眼神冷。'},ng:{mt:-10,rel:{creep:20},txt:'他硬塞給你就跑了。抱枕上的你在笑，你沒有。'}},
+  {t:'交給店長處理',ok:{rel:{yuki:10,creep:10},txt:'店長把抱枕收進櫃子，說會記錄下來。她的表情很嚴肅。'}},
+  {t:'不敢拒絕，收下',ok:{mt:-15,rel:{creep:25},txt:'你把抱枕塞進置物櫃最深處，一整晚都覺得有人在看你。'}}],{met:'creep'}),
+ E('creep3','any','life','creep','','下班路上，你發現格子衫叔叔一直跟在後面。巷子很暗。',[
+  {t:'打給 Jacky 哥',auto:['jacky',40],stat:'social',dc:3,ok:{fan:10,mt:5,flag:'creepDone',rel:{jacky:10,creep:-100},txt:'Jacky 哥五分鐘就開車到了。叔叔落荒而逃，之後再也沒出現。'},ng:{mt:-15,rel:{creep:10},txt:'Jacky 哥沒接。你一路跑回家，鎖了三道門。'}},
+  {t:'打給小雪店長',auto:['yuki',40],stat:'social',dc:3,ok:{mt:5,flag:'creepDone',rel:{yuki:10,creep:-100},txt:'店長帶著兩位女僕前輩衝過來。叔叔被列入全台女僕店黑名單。'},ng:{mt:-15,rel:{creep:10},txt:'店長在開會。你躲進便利商店待了一小時。'}},
+  {t:'轉身直接報警',stat:'grit',dc:1,ok:{mt:-5,flag:'creepDone',rel:{creep:-100},txt:'警察來了。你做完筆錄才發現手一直在抖，但你做到了。'},ng:{mt:-15,txt:'警察來的時候他已經不見了。你一整週都繞路回家。'}}],{rel:['creep',30],noflag:'creepDone'}),
+ E('senpai2','any','life','senpai','學校','期中考前，阿哲學長在圖書館遞給你一疊筆記：「你最近上班很累吧？」',[
+  {t:'收下，認真道謝',ok:{st:25,rel:{senpai:15},txt:'筆記上每一頁都有螢光筆。還有一頁畫了一顆歪掉的愛心。'}},
+  {t:'請他喝奶茶',ok:{m:-80,st:20,rel:{senpai:25},txt:'他說他最喜歡半糖去冰。你記住了。'}},
+  {t:'「學長，你常去女僕店喔？」',stat:'social',dc:1,ok:{fan:5,rel:{senpai:10},txt:'他臉紅到耳根，筆記掉了一地。'},ng:{rel:{senpai:-5},txt:'他說他要去上課了。圖書館沒有課。'}}],{met:'senpai'}),
+ E('senpai3','any','life','senpai','學校','學長約你在店門口，手上拿著一束花：「我……我可以不當你的主人嗎？」',[
+  {t:'答應他',ok:{mt:20,fan:-15,flag:'dating',rel:{senpai:30},txt:'你的粉絲少了一個人，你的人生多了一個人。'}},
+  {t:'「女僕不能談戀愛喔～」',stat:'social',dc:1,ok:{fan:15,rel:{senpai:5},txt:'他笑著說，那他會一直當你的主人。'},ng:{mt:-10,rel:{senpai:-10},txt:'花掉在地上。你們都沒去撿。'}},
+  {t:'「給我一點時間。」',ok:{mt:5,rel:{senpai:5},txt:'他說他可以等。大學生最多的就是時間。'}}],{rel:['senpai',45],noflag:'dating'}),
+ E('yuki2','any','cafe','yuki','','小雪店長說她打算開第二家分店，問你想不想當副店長。',[
+  {t:'「我想試試看！」',stat:'grit',dc:2,ok:{fan:20,social:1,rel:{yuki:20},txt:'店長給了你一把鑰匙。很輕，但你覺得很重。'},ng:{mt:-10,rel:{yuki:5},txt:'第一天你就把收銀機鎖死了。'}},
+  {t:'「我還想專心當女僕。」',ok:{mt:5,rel:{yuki:8},txt:'店長說她懂。「那就當最好的女僕。」'}},
+  {t:'先問薪水',stat:'social',dc:1,ok:{m:3000,rel:{yuki:5},txt:'談判成功，時薪加了五十塊。店長說你很有出息。'},ng:{rel:{yuki:-5},txt:'店長：「……我考慮一下要不要問你。」'}}],{rel:['yuki',30]}),
+ E('bday','cafe','cafe','全場主人','舞台','今天是你的生誕祭！花籃擺滿門口，大家都在等你出場。',[
+  {t:'唱一首自己寫的歌',stat:'perform',dc:2,ok:{fan:40,txt:'唱完那一刻，全場安靜，然後爆出掌聲。'},ng:{fan:15,mt:-4,txt:'唱到一半忘詞，大家幫你接下去。哭了，是開心的哭。'}},
+  {t:'一桌一桌親自道謝',stat:'social',dc:1,ok:{fan:35,m:5000,txt:'每桌都加點了。你的感謝很真誠，業績也很真實。'},ng:{fan:15,mt:-8,txt:'走到第十桌你已經講不出話了。'}},
+  {t:'累到在後台睡著',ok:{fan:10,mt:15,txt:'醒來時，休息室堆滿了禮物和小卡。'}}]),
+ E('mag','cafe','cafe','雜誌攝影師','評審','動漫雜誌來採訪「台北最萌女僕」，鏡頭對準了你。',[
+  {t:'擺出招牌姿勢',stat:'look',dc:2,ok:{fan:35,rel:{mom:10},txt:'照片登上內頁。你媽買了十本。'},ng:{fan:10,txt:'照片登出來你在眨眼。兩隻眼睛都在眨。'}},
+  {t:'侃侃而談女僕之道',stat:'social',dc:2,ok:{fan:30,txt:'標題：「她讓女僕成為一門專業」。'},ng:{fan:8,txt:'你講太多，被剪到只剩一句「歡迎回來」。'}},
+  {t:'害羞躲到前輩後面',ok:{fan:5,mt:5,rel:{lulu:5},txt:'照片裡只看得到你的半根馬尾，和露露的完美側臉。'}}]),
+ E('drinkoff','bar','bar','虎哥','大佬','僕吧常客虎哥拍桌：「妹妹，跟我比三杯，你贏我就開一瓶香檳！」',[
+  {t:'接受挑戰',stat:'grit',dc:2,ok:{fan:30,m:3000,txt:'虎哥先倒了。全場高喊你的名字。'},ng:{fan:8,mt:-15,txt:'你贏了第一杯。第二杯你在廁所。'}},
+  {t:'用話術讓他自己喝',stat:'social',dc:2,ok:{fan:35,m:3000,txt:'三句話後，虎哥自己喝了三杯，還開了香檳。'},ng:{fan:5,txt:'他：「妹妹，你在拖時間喔。」'}},
+  {t:'偷偷用果汁換酒',stat:'perform',dc:1,ok:{fan:20,txt:'演技完美，沒人發現。'},ng:{fan:-5,mt:-10,txt:'被抓包。虎哥大笑，你覺得自己像小學生。'}}]),
+ E('cocktail','bar','bar','僕吧店長','店長','僕吧店長要你上台表演花式調酒。你只練了三天。',[
+  {t:'硬著頭皮表演',stat:'perform',dc:2,ok:{fan:30,txt:'雪克杯在空中轉了三圈，穩穩落回手上。帥。'},ng:{fan:6,mt:-8,txt:'雪克杯飛進了觀眾席。'}},
+  {t:'邊調邊講笑話',stat:'social',dc:1,ok:{fan:25,txt:'沒人在看你的手，大家都在笑。'},ng:{fan:5,txt:'笑話跟調酒一樣普通。'}},
+  {t:'調最簡單的，但超有自信',stat:'grit',dc:1,ok:{fan:20,txt:'自信是最好的調味。'},ng:{fan:3,mt:-5,txt:'一杯柳橙汁加冰塊。全場沉默。'}}]),
+ E('drunk','bar','bar','醉倒的上班族','醉客','一位喝醉的客人開始哭，說他被公司裁員，還說你是他唯一的朋友。',[
+  {t:'陪他聊天',stat:'social',dc:1,ok:{fan:20,mt:-4,txt:'他清醒後成了你最忠實的指名客。'},ng:{mt:-12,txt:'他哭了兩個小時。你的妝花了，他的也是。'}},
+  {t:'幫他叫計程車',ok:{fan:10,mt:2,txt:'下週他帶著一盒餅乾回來道謝。'}},
+  {t:'趁機推銷香檳',stat:'social',dc:2,ok:{fan:15,m:4000,mt:-6,txt:'業績達成，良心有點痛。'},ng:{fan:-10,txt:'他清醒了一點，覺得被騙，走了。'}}]),
+ E('tower','bar','bar','月底業績戰','舞台','月底業績戰！只要再一座香檳塔，你就能拿下本月第一。',[
+  {t:'打電話給 Jacky 哥',auto:['jacky',40],stat:'social',dc:3,ok:{fan:45,m:8000,rel:{jacky:10},txt:'Jacky 哥二十分鐘後抵達，還帶了兩個朋友：「我家女僕要拿第一。」'},ng:{fan:10,mt:-8,txt:'他在出差。在日本。'}},
+  {t:'用表演拚現場客人',stat:'perform',dc:2,ok:{fan:40,txt:'你跳了一支舞，三桌客人同時舉手加點。'},ng:{fan:10,txt:'掌聲很多，香檳很少。'}},
+  {t:'不想逼客人消費',ok:{fan:10,mt:10,txt:'你沒拿第一，但睡得很好。'}}]),
+ E('audition','idol','stage','甄選評審','評審','地下偶像團體「甜點戰隊」甄選，評審要你現場唱跳一分鐘。',[
+  {t:'全力唱跳',stat:'perform',dc:2,ok:{fan:35,txt:'評審放下筆：「明天來練習。」'},ng:{fan:10,mt:-10,txt:'跳到一半鞋子飛出去。評審說：「很有記憶點。」'}},
+  {t:'靠可愛撐場',stat:'look',dc:2,ok:{fan:30,txt:'你只是對鏡頭笑了一下，評審就寫下了你的名字。'},ng:{fan:8,txt:'評審：「下一位。」'}},
+  {t:'講自己的女僕故事',stat:'social',dc:1,ok:{fan:25,txt:'評審說你很有「故事性」。偶像需要故事。'},ng:{fan:8,txt:'你講太久，超時了。'}}]),
+ E('handshake','idol','stage','握手會','粉絲','第一次握手會！隔壁隊伍有五十人，你的只有……三個。',[
+  {t:'每個人都聊到天荒地老',stat:'social',dc:1,ok:{fan:30,txt:'三個人變成三十個人，大家都說你超會聊。'},ng:{fan:8,txt:'三個人都聊完了。還有四十分鐘。'}},
+  {t:'去隔壁隊伍發傳單',stat:'grit',dc:2,ok:{fan:35,txt:'你搶到十幾個新粉。隔壁成員的笑容僵住了。'},ng:{fan:5,mt:-12,txt:'被隔壁經紀人瞪到想消失。'}},
+  {t:'傳訊息給 Jacky 哥',auto:['jacky',30],stat:'social',dc:3,ok:{fan:30,rel:{jacky:10},txt:'Jacky 哥帶了整個公司的同事來排隊。隊伍瞬間變最長。'},ng:{fan:3,mt:5,txt:'他已讀了。三個人還是三個人。'}}]),
+ E('stalker','idol','life','私聯粉','變態','有粉絲查到你的學校，在校門口等你，手上捧著一束花。',[
+  {t:'禮貌拒絕，告訴經紀人',stat:'grit',dc:1,ok:{fan:10,mt:5,txt:'經紀人處理得很好。你的界線比花更重要。'},ng:{mt:-15,txt:'你拒絕了，但之後一週都繞路回家。'}},
+  {t:'收下花，快速離開',ok:{fan:5,mt:-8,txt:'花很香，但你一整晚睡不著。'}},
+  {t:'發文提醒粉絲守規矩',stat:'social',dc:2,ok:{fan:25,txt:'粉絲們紛紛表態支持，你的形象加分。'},ng:{fan:-10,mt:-8,txt:'文章被斷章取義，留言區炎上。'}}]),
+ E('live','idol','stage','Livehouse','舞台','第一場 Live！Livehouse 裡擠了八十個人，比你想像的多。',[
+  {t:'照排練演出',stat:'perform',dc:2,ok:{fan:45,txt:'安可聲響了三次。你在後台哭到妝全花。'},ng:{fan:15,mt:-6,txt:'耳返壞了，你全程靠感覺唱。'}},
+  {t:'跳下台跟大家擊掌',stat:'look',dc:2,ok:{fan:40,txt:'前排粉絲說這輩子不洗手了。'},ng:{fan:10,mt:-6,txt:'你跳下去，然後扭到腳。'}},
+  {t:'MC 時間講女僕店趣事',stat:'social',dc:2,ok:{fan:40,txt:'奧客阿姨的故事讓全場笑翻。'},ng:{fan:10,txt:'講到格子衫叔叔，全場氣氛很微妙。'}}]),
+ E('rent','rent','life','granny','','房東阿媽敲門：「妹妹啊，這個月房租五千喔。」',[
+  {t:'乖乖繳房租',cost:5000,ok:{rel:{granny:10},txt:'阿媽收下錢，順手塞給你一袋橘子。'}},
+  {t:'撒嬌延期',stat:'social',dc:2,ok:{rel:{granny:5},txt:'阿媽說：「好啦好啦，下個月一起繳。」你暫時活下來了。'},ng:{m:-5000,mt:-12,rel:{granny:-10},txt:'阿媽：「妹妹，撒嬌不能當錢用。」錢還是被收走了。'}},
+  {t:'幫阿媽修手機抵房租',stat:'grit',dc:1,ok:{m:-2000,rel:{granny:20},txt:'你幫她裝好 LINE，還教她傳貼圖。她決定少收三千。'},ng:{m:-5000,rel:{granny:5},txt:'你把她的字體調成超大，她很滿意，但房租照收。'}}]),
+ E('mom1','life','life','mom','','媽媽打電話來：「最近在幹嘛？錢夠不夠用？」',[
+  {t:'老實說在女僕店打工',stat:'grit',dc:1,ok:{mt:10,rel:{mom:20},txt:'媽媽沉默三秒：「那你要拍照給我看。」'},ng:{mt:-10,rel:{mom:-5},txt:'媽媽說要跟你爸討論一下。你爸已讀不回。'}},
+  {t:'說在咖啡廳打工',ok:{rel:{mom:5},txt:'技術上沒說謊。'}},
+  {t:'「錢不夠！」',stat:'social',dc:1,ok:{m:3000,rel:{mom:5},txt:'媽媽匯了三千，備註：「少喝手搖」。'},ng:{rel:{mom:-5},txt:'媽媽：「那你少喝點手搖。」'}}]),
+ E('mom2','life','cafe','mom','','媽媽突然來台北，說要來你打工的咖啡廳看看！',[
+  {t:'讓她看你表演',stat:'perform',dc:1,ok:{fan:15,rel:{mom:30},txt:'媽媽錄影傳到家族群組，親戚按了 47 個讚。'},ng:{mt:-5,rel:{mom:10},txt:'媽媽：「你小時候跳得比較好。」'}},
+  {t:'請 Jacky 哥招待她',auto:['jacky',40],stat:'social',dc:3,ok:{fan:10,rel:{mom:20,jacky:5},txt:'Jacky 哥叫她「伯母」，幫她開了一瓶氣泡水。媽媽說這個年輕人不錯。'},ng:{mt:-8,txt:'Jacky 哥不在。媽媽跟格子衫叔叔聊了起來。你衝過去。'}},
+  {t:'帶她去逛夜市避開',ok:{mt:-5,rel:{mom:5},txt:'你們吃了雞排和地瓜球。她沒發現。應該。'}}],{met:'mom'}),
+ E('exam','life','life','期中考週','學校','期中考週！你已經三天沒睡了，明天還有班。',[
+  {t:'請假專心讀書',ok:{st:30,m:-1200,rel:{yuki:-3},txt:'店長准假了，但語氣有點遺憾。'}},
+  {t:'邊上班邊讀',stat:'grit',dc:2,ok:{st:20,mt:-5,txt:'你在蛋包飯上背單字。效率驚人。'},ng:{st:5,mt:-15,txt:'你在客人面前睡著了。'}},
+  {t:'擺爛',ok:{mt:10,st:-10,txt:'考卷發下來，你在上面畫了一顆愛心。'}}]),
+ E('roommate','life','life','室友小婷','室友','室友打開你的衣櫃，發現了女僕裝。',[
+  {t:'大方承認',stat:'grit',dc:0,ok:{fan:8,txt:'她說週末要帶整個社團來捧場。'},ng:{mt:-5,txt:'她用一種很複雜的表情看了你三秒。'}},
+  {t:'說是 cosplay 用的',stat:'social',dc:1,ok:{mt:3,txt:'她信了。還問你可不可以借她。'},ng:{mt:-5,txt:'她：「那你昨天穿著它出門是去哪？」'}},
+  {t:'請她吃雞排封口',ok:{m:-100,mt:2,txt:'雞排是大學生之間最有效的保密協議。'}}]),
+ E('group','life','life','通識課','學校','通識課分組報告，組員全部失蹤，明天就要交。',[
+  {t:'一個人做完',ok:{st:15,mt:-10,txt:'你做完了，還幫每個人都寫了名字。你是天使，也是笨蛋。'}},
+  {t:'用女僕話術催組員',stat:'social',dc:1,ok:{st:20,txt:'「主人們～報告要交了喔～」三分鐘內全員回覆。'},ng:{st:5,mt:-5,txt:'組員以為你被盜帳號。'}},
+  {t:'放生報告',ok:{st:-12,mt:5,txt:'教授給了全組零分。你睡得很好。'}}])
+];
+const PREPS=[
+ ['none','直接去上班','什麼都不做',{}],
+ ['study','認真上課','學業 +20・精神 −3',{st:20,mt:-3}],
+ ['dance','練舞練唱','表演 +1・精神 −5',{perform:1,mt:-5}],
+ ['variety','看綜藝學話術','公關 +1・精神 −3',{social:1,mt:-3}],
+ ['ig','經營 IG','人氣 +8・精神 −4',{fan:8,mt:-4}],
+ ['rest','耍廢一整天','精神 +20',{mt:20}]
+];
+const MINIS={
+ heart:{title:'蛋包飯畫愛心',place:'cafe',txt:[[85,'完美的愛心！主人捨不得吃，拍了二十張照片。'],[50,'愛心有點歪，但主人說這叫「個性」。'],[0,'番茄醬畫出了一個……抽象派作品。主人沉默了。']]},
+ rhythm:{title:'萌萌應援舞',place:'stage',txt:[[85,'全場跟著打 call，你的舞步被錄下來瘋傳。'],[50,'中間踩錯兩拍，但笑容撐住了。'],[0,'你跟音樂好像活在不同的時空。']]},
+ deliver:{title:'尖峰時段送餐',place:'cafe',txt:[[85,'你送餐快到殘影都出來了。店長考慮幫你加薪。'],[50,'有一桌拿到了別人的聖代，但他們決定分著吃。'],[0,'奶茶送到了廁所。不要問。']]}
+};
+const ENDINGS={
+ kanban:{title:'傳說看板女僕',hue:355,text:'你的照片掛在店門口，新人進來第一句話是：「我想成為像她一樣的女僕。」',ep:'歡迎回來，是我這輩子說過最多次的話。'},
+ redcard:{title:'僕吧紅牌',hue:295,text:'週五的預約排到下個月。虎哥說：「當年那個喝一杯就去廁所的妹妹，現在是女王了。」',ep:'香檳塔很高，但我站得更高。'},
+ idol:{title:'地下偶像出道',hue:60,text:'Livehouse 的燈打在你身上，台下的應援棒是你的代表色。最前排，Jacky 哥哭得最大聲。',ep:'從托盤到麥克風，只差一點勇氣。'},
+ cafeflop:{title:'平凡畢業',hue:150,text:'你順利畢業，進了一間普通的公司。偶爾經過那間店，還會聽見有人喊「歡迎回來」。',ep:'那段時間，我真的很可愛。'},
+ barflop:{title:'僕吧小透明',hue:250,text:'你每晚都在擦杯子。杯子很亮，你的業績不太亮。',ep:'至少我調酒變很厲害了。'},
+ idolflop:{title:'地偶糊咖',hue:30,text:'最後一場演出，台下三個人。一個是 Jacky 哥，一個是你媽，一個走錯場。',ep:'夢想很貴，但我付過了。'},
+ expelled:{title:'被二一退學',hue:20,text:'教務處的信寄到家裡。媽媽問：「你這學期到底在幹嘛？」你說：「當女僕。」',ep:'學分沒了，但我的萌萌Q很標準。'},
+ burnout:{title:'心累離職',hue:235,text:'某天早上醒來，你發現自己笑不出來了。你遞了辭呈，小雪店長抱了你一下。',ep:'營業笑容也是會用完的。'}
+};
+const fmt=n=>Math.round(n).toLocaleString('en-US');
+const clamp=(v,a,b)=>Math.max(a,Math.min(b,v));
+const tint=x=>`oklch(0.89 0.065 ${x})`,ink=x=>`oklch(0.36 0.1 ${x})`;
+const PINK='oklch(0.58 0.17 355)',SOFT='oklch(0.95 0.03 355)',CARD='oklch(0.995 0.004 350)',LINE='oklch(0.9 0.03 350)';
+const GOOD='oklch(0.55 0.13 165)',BAD='oklch(0.55 0.17 25)';
+const BTN={background:PINK,color:'white',border:'none',borderRadius:16,padding:'14px 26px',fontSize:17,fontWeight:900,cursor:'pointer',boxShadow:'0 5px 0 oklch(0.45 0.15 355)'};
+
+function MiniShell({phase,intro,onStart,score,onDone,children}){
+  if(phase==='intro')return h('div',{style:{display:'flex',flexDirection:'column',gap:16,alignItems:'center',textAlign:'center',padding:'10px 0'}},
+    h('p',{style:{margin:0,fontSize:17,lineHeight:1.7,maxWidth:'26em',textWrap:'pretty'}},intro),
+    h('button',{style:BTN,onClick:onStart},'開始！'));
+  if(phase==='done')return h('div',{style:{display:'flex',flexDirection:'column',gap:12,alignItems:'center',padding:'10px 0'}},
+    h('span',{style:{fontSize:14,fontWeight:700,color:'oklch(0.48 0.04 350)'}},'得分'),
+    h('span',{style:{fontSize:64,fontWeight:900,lineHeight:1,color:score>=85?PINK:'oklch(0.3 0.05 350)'}},score),
+    h('button',{style:BTN,onClick:()=>onDone(score)},'看結果'));
+  return children;
+}
+function HeartGame({onDone,beep}){
+  const W=300,H=260;const cv=React.useRef(null);const S=React.useRef({strokes:[],down:false,guide:[],fin:false});
+  const [phase,setPhase]=React.useState('intro');const [left,setLeft]=React.useState(8);const [score,setScore]=React.useState(0);
+  if(!S.current.guide.length){const s=5.2,cx=W/2,cy=H/2+4-2.5*s;for(let i=0;i<90;i++){const t=i/90*Math.PI*2;S.current.guide.push([cx+16*Math.pow(Math.sin(t),3)*s,cy-(13*Math.cos(t)-5*Math.cos(2*t)-2*Math.cos(3*t)-Math.cos(4*t))*s]);}}
+  const draw=()=>{const c=cv.current;if(!c)return;const d=window.devicePixelRatio||1;if(c.width!==W*d){c.width=W*d;c.height=H*d;}const x=c.getContext('2d');x.setTransform(d,0,0,d,0,0);x.clearRect(0,0,W,H);
+    x.fillStyle='#ffffff';x.beginPath();x.ellipse(W/2,H/2+4,W/2-4,H/2-8,0,0,Math.PI*2);x.fill();x.strokeStyle='#f1d9df';x.lineWidth=3;x.stroke();
+    x.fillStyle='#ffd25e';x.beginPath();x.ellipse(W/2,H/2+4,W/2-26,H/2-30,0,0,Math.PI*2);x.fill();
+    x.setLineDash([3,9]);x.strokeStyle='rgba(190,40,70,.45)';x.lineWidth=3;x.beginPath();S.current.guide.forEach((p,i)=>i?x.lineTo(p[0],p[1]):x.moveTo(p[0],p[1]));x.closePath();x.stroke();x.setLineDash([]);
+    x.strokeStyle='#d0263c';x.lineWidth=8;x.lineCap='round';x.lineJoin='round';S.current.strokes.forEach(st=>{x.beginPath();st.forEach((p,i)=>i?x.lineTo(p[0],p[1]):x.moveTo(p[0],p[1]));x.stroke();});};
+  const finish=()=>{if(S.current.fin)return;S.current.fin=true;const pts=S.current.strokes.flat();const g=S.current.guide;const dd=(a,b)=>Math.hypot(a[0]-b[0],a[1]-b[1]);
+    const cov=g.filter(q=>pts.some(p=>dd(p,q)<15)).length/g.length;const off=pts.length?pts.filter(p=>!g.some(q=>dd(p,q)<22)).length/pts.length:1;
+    setScore(Math.round(clamp(cov*105-off*70,0,100)));setPhase('done');};
+  React.useEffect(()=>{draw();});
+  React.useEffect(()=>{if(phase!=='play')return;const id=setInterval(()=>setLeft(l=>{const n=+(l-0.1).toFixed(1);if(n<=0){clearInterval(id);setTimeout(finish,0);return 0;}return n;}),100);return()=>clearInterval(id);},[phase]);
+  const pos=e=>{const r=cv.current.getBoundingClientRect();return[(e.clientX-r.left)*W/r.width,(e.clientY-r.top)*H/r.height];};
+  return h(MiniShell,{phase,score,onDone,onStart:()=>setPhase('play'),intro:'主人點了萌萌蛋包飯！用滑鼠或手指沿著虛線，畫出一顆愛心。8 秒內越貼合越高分。'},
+    h('div',{style:{display:'flex',flexDirection:'column',alignItems:'center',gap:12}},
+      h('div',{style:{display:'flex',justifyContent:'space-between',width:'100%',maxWidth:W,fontWeight:900}},h('span',null,'沿著虛線畫'),h('span',{style:{color:left<3?BAD:PINK}},left.toFixed(1)+' 秒')),
+      h('canvas',{ref:cv,style:{width:'100%',maxWidth:W,aspectRatio:W+'/'+H,touchAction:'none',cursor:'crosshair',borderRadius:20,background:'oklch(0.96 0.02 355)'},
+        onPointerDown:e=>{if(phase!=='play')return;e.currentTarget.setPointerCapture(e.pointerId);S.current.down=true;S.current.strokes.push([pos(e)]);draw();},
+        onPointerMove:e=>{if(!S.current.down)return;S.current.strokes[S.current.strokes.length-1].push(pos(e));draw();},
+        onPointerUp:()=>{S.current.down=false;},onPointerCancel:()=>{S.current.down=false;}}),
+      h('button',{style:{...BTN,padding:'10px 20px',fontSize:15},onClick:finish},'畫好了')));
+}
+function RhythmGame({onDone,beep}){
+  const KEYS=['d','f','j','k'],TRAVEL=1.5,HT=300,HIT=250,COLORS=[355,295,200,70];
+  const [phase,setPhase]=React.useState('intro');const [,force]=React.useState(0);const [score,setScore]=React.useState(0);
+  const R=React.useRef({notes:[],t0:0,raf:0,combo:0,p:0,g:0,judge:'',flash:[-9,-9,-9,-9]});
+  const now=()=>performance.now()/1000-R.current.t0;
+  const hit=lane=>{const r=R.current;const t=now();r.flash[lane]=t;let best=null;r.notes.forEach(n=>{if(!n.j&&n.lane===lane&&Math.abs(t-n.t)<0.17&&(!best||Math.abs(t-n.t)<Math.abs(t-best.t)))best=n;});
+    if(best){const d=Math.abs(t-best.t);if(d<0.08){best.j='p';r.p++;r.judge='PERFECT';}else{best.j='g';r.g++;r.judge='GOOD';}r.combo++;beep&&beep('tap');}};
+  const start=()=>{const notes=[];let t=1.8;for(let i=0;i<24;i++){notes.push({lane:Math.floor(Math.random()*4),t,j:null});t+=[0.35,0.5,0.5,0.7][Math.floor(Math.random()*4)];}
+    Object.assign(R.current,{notes,t0:performance.now()/1000,combo:0,p:0,g:0,judge:''});setPhase('play');};
+  React.useEffect(()=>{if(phase!=='play')return;const r=R.current;
+    const loop=()=>{const t=now();r.notes.forEach(n=>{if(!n.j&&t-n.t>0.17){n.j='m';r.combo=0;r.judge='MISS';}});
+      if(t>r.notes[r.notes.length-1].t+0.8){setScore(Math.round((r.p+r.g*0.6)/r.notes.length*100));setPhase('done');return;}
+      force(x=>x+1);r.raf=requestAnimationFrame(loop);};
+    r.raf=requestAnimationFrame(loop);const kd=e=>{const i=KEYS.indexOf((e.key||'').toLowerCase());if(i>=0&&!e.repeat){e.preventDefault();hit(i);}};window.addEventListener('keydown',kd);
+    return()=>{cancelAnimationFrame(r.raf);window.removeEventListener('keydown',kd);};},[phase]);
+  const r=R.current;const t=phase==='play'?now():0;
+  return h(MiniShell,{phase,score,onDone,onStart:start,intro:'台上燈亮了！音符掉到粉紅線時，按下對應的 D F J K 鍵（手機直接點下方按鈕）。'},
+    h('div',{style:{display:'flex',flexDirection:'column',alignItems:'center',gap:10}},
+      h('div',{style:{display:'flex',justifyContent:'space-between',width:'100%',maxWidth:320,fontWeight:900}},h('span',{style:{color:r.judge==='MISS'?BAD:PINK}},r.judge||'準備'),h('span',null,'COMBO '+r.combo)),
+      h('div',{style:{position:'relative',width:'100%',maxWidth:320,height:HT,borderRadius:20,overflow:'hidden',background:'oklch(0.3 0.06 300)',display:'grid',gridTemplateColumns:'repeat(4,1fr)'}},
+        [0,1,2,3].map(l=>h('div',{key:'l'+l,style:{borderRight:l<3?'1px solid oklch(0.4 0.06 300)':'none',background:t-r.flash[l]<0.12?'oklch(0.42 0.1 '+COLORS[l]+')':'transparent'}})),
+        h('div',{style:{position:'absolute',left:0,right:0,top:HIT,height:4,background:PINK,boxShadow:'0 0 12px '+PINK}}),
+        r.notes.filter(n=>!n.j&&n.t-t<TRAVEL&&n.t-t>-0.2).map((n,i)=>h('div',{key:n.t,style:{position:'absolute',left:(n.lane*25+3)+'%',width:'19%',height:18,top:HIT-(n.t-t)/TRAVEL*HIT-9,borderRadius:9,background:'oklch(0.85 0.1 '+COLORS[n.lane]+')'}}))),
+      h('div',{style:{display:'grid',gridTemplateColumns:'repeat(4,1fr)',gap:6,width:'100%',maxWidth:320}},
+        KEYS.map((k,l)=>h('button',{key:k,onPointerDown:e=>{e.preventDefault();hit(l);},style:{height:52,borderRadius:14,border:'none',background:'oklch(0.89 0.065 '+COLORS[l]+')',color:'oklch(0.36 0.1 '+COLORS[l]+')',fontSize:18,fontWeight:900,cursor:'pointer',touchAction:'manipulation'}},k.toUpperCase())))));
+}
+function DeliverGame({onDone,beep}){
+  const ITEMS=[['蛋包飯',80],['奶茶',50],['聖代',355],['拍立得',230]];
+  const mk=()=>({table:1+Math.floor(Math.random()*8),item:Math.floor(Math.random()*4),id:Math.random()});
+  const [phase,setPhase]=React.useState('intro');const [left,setLeft]=React.useState(15);const [q,setQ]=React.useState([mk(),mk(),mk()]);
+  const [ok,setOk]=React.useState(0);const [bad,setBad]=React.useState(0);const [shake,setShake]=React.useState(0);const [score,setScore]=React.useState(0);
+  const st=React.useRef({ok:0,bad:0});
+  const pick=i=>{if(phase!=='play')return;if(i===q[0].item){st.current.ok++;setOk(st.current.ok);setQ(x=>[...x.slice(1),mk()]);beep&&beep('tap');}else{st.current.bad++;setBad(st.current.bad);setShake(s=>s+1);setLeft(l=>Math.max(0,l-1));}};
+  React.useEffect(()=>{if(phase!=='play')return;const id=setInterval(()=>setLeft(l=>{const n=+(l-0.1).toFixed(1);if(n<=0){clearInterval(id);setTimeout(()=>{setScore(Math.round(clamp((st.current.ok-st.current.bad*0.5)/13*100,0,100)));setPhase('done');},0);return 0;}return n;}),100);
+    const kd=e=>{const i=['1','2','3','4'].indexOf(e.key);if(i>=0)pick(i);};window.addEventListener('keydown',kd);return()=>{clearInterval(id);window.removeEventListener('keydown',kd);};},[phase,q]);
+  return h(MiniShell,{phase,score,onDone,onStart:()=>setPhase('play'),intro:'尖峰時段！看清楚最前面那桌點了什麼，按下正確的餐點（鍵盤 1–4 也可以）。送錯會扣 1 秒。'},
+    h('div',{style:{display:'flex',flexDirection:'column',alignItems:'center',gap:14}},
+      h('div',{style:{display:'flex',justifyContent:'space-between',width:'100%',maxWidth:360,fontWeight:900}},h('span',null,'送達 '+ok+(bad?'・送錯 '+bad:'')),h('span',{style:{color:left<4?BAD:PINK}},left.toFixed(1)+' 秒')),
+      h('div',{style:{display:'flex',gap:8,width:'100%',maxWidth:360,alignItems:'stretch'}},
+        q.map((o,i)=>h('div',{key:o.id+'-'+shake*(i===0?1:0),style:{flex:i===0?2:1,background:i===0?'oklch(0.89 0.065 '+ITEMS[o.item][1]+')':'oklch(0.95 0.015 350)',color:'oklch(0.36 0.1 '+ITEMS[o.item][1]+')',borderRadius:16,padding:i===0?'16px 12px':'10px 8px',display:'flex',flexDirection:'column',gap:4,alignItems:'center',justifyContent:'center',opacity:i===0?1:0.75,animation:i===0&&shake?'mlShake .25s':'none'}},
+          h('span',{style:{fontSize:12,fontWeight:700}},o.table+' 號桌'),h('span',{style:{fontSize:i===0?26:15,fontWeight:900}},ITEMS[o.item][0])))),
+      h('div',{style:{display:'grid',gridTemplateColumns:'repeat(2,1fr)',gap:8,width:'100%',maxWidth:360}},
+        ITEMS.map(([n,hu],i)=>h('button',{key:n,onClick:()=>pick(i),style:{height:60,borderRadius:16,border:'2px solid oklch(0.36 0.1 '+hu+')',background:CARD,color:'oklch(0.36 0.1 '+hu+')',fontSize:18,fontWeight:900,cursor:'pointer'}},(i+1)+'・'+n)))));
+}
+function Fx({good,fan}){
+  const items=React.useMemo(()=>Array.from({length:good?14:5},(_,i)=>({x:5+Math.random()*90,size:good?18+Math.random()*22:16+Math.random()*10,dur:1.6+Math.random()*1.2,delay:Math.random()*0.5,ch:good?'♥':'…',color:good?['oklch(0.65 0.18 355)','oklch(0.7 0.15 330)','oklch(0.75 0.12 20)'][i%3]:'oklch(0.6 0.03 350)'})),[]);
+  return h('div',{style:{position:'fixed',inset:0,pointerEvents:'none',zIndex:60,overflow:'hidden'}},
+    items.map((it,i)=>h('span',{key:i,style:{position:'absolute',left:it.x+'%',bottom:-40,fontSize:it.size,color:it.color,fontWeight:900,opacity:0,animation:`mlFloat ${it.dur}s ease-out ${it.delay}s forwards`}},it.ch)),
+    fan?h('span',{style:{position:'absolute',left:'50%',top:'42%',fontSize:56,fontWeight:900,color:fan>0?PINK:BAD,textShadow:'0 4px 0 white',opacity:0,animation:'mlPop 1.6s ease-out forwards'}},(fan>0?'+':'')+fan+' 人氣'):null);
+}
+function Toast({text}){return h('div',{style:{position:'fixed',top:16,left:'50%',zIndex:70,background:'oklch(0.3 0.05 350)',color:'white',borderRadius:16,padding:'12px 18px',fontWeight:900,fontSize:15,boxShadow:'0 6px 20px rgba(0,0,0,.2)',whiteSpace:'nowrap',animation:'mlToast 3.4s ease forwards'}},text);}
+const MINI_COMP={heart:HeartGame,rhythm:RhythmGame,deliver:DeliverGame};
+
+class Component extends DCLogic {
+  state={screen:'title',prevScreen:'title',sound:true,music:true,hasSave:false,saveInfo:'',name:'',alloc:{look:0,perform:0,social:0,grit:0},g:null,prep:'none',ev:null,mini:null,res:null,ending:null,copied:false,best:0,board:[],newBest:false,ach:[],fx:null,toast:null};
+  pool(){return this.props.startPoints??16;}
+  goal(){return this.props.fanGoal??320;}
+  maxS(){return this.props.maxShifts??12;}
+  componentDidMount(){
+    try{const s=JSON.parse(localStorage.getItem(SAVE_KEY)||'null');
+      this.setState({hasSave:!!(s&&s.g),saveInfo:s&&s.g?`${s.g.name}・第 ${s.g.shift} 班`:'',best:+(localStorage.getItem(BEST_KEY)||0),board:JSON.parse(localStorage.getItem(BOARD_KEY)||'[]'),ach:JSON.parse(localStorage.getItem(ACH_KEY)||'[]'),sound:localStorage.getItem(SOUND_KEY)!=='0',music:localStorage.getItem(MUSIC_KEY)!=='0'});}catch(e){}
+    this.onFirst=()=>{if(this.state.music)this.startBgm();};
+    window.addEventListener('pointerdown',this.onFirst);
+  }
+  componentWillUnmount(){window.removeEventListener('pointerdown',this.onFirst);this.stopBgm();}
+  ctx(){return this.ac||(this.ac=new (window.AudioContext||window.webkitAudioContext)());}
+  tone(m,t,d,type,vol,dest){const C=this.ac;const o=C.createOscillator(),gn=C.createGain();o.type=type;o.frequency.value=440*Math.pow(2,(m-69)/12);gn.gain.setValueAtTime(0.0001,t);gn.gain.exponentialRampToValueAtTime(vol,t+0.01);gn.gain.exponentialRampToValueAtTime(0.0001,t+d);o.connect(gn).connect(dest);o.start(t);o.stop(t+d+0.03);}
+  startBgm(){
+    if(this.bgmTimer)return;try{const C=this.ctx();if(C.state==='suspended')C.resume();
+      const master=C.createGain();master.gain.value=0.045;master.connect(C.destination);this.bgmGain=master;
+      const mel=[76,79,84,79,81,79,76,0,74,77,81,77,79,0,0,0,72,76,79,76,77,76,74,72,71,74,79,74,72,0,0,0];
+      const bass=[48,55,53,55,45,52,53,55];const step=60/132/2;let i=0;let next=C.currentTime+0.1;
+      this.bgmTimer=setInterval(()=>{while(next<C.currentTime+0.3){const n=mel[i%mel.length];if(n)this.tone(n,next,step*0.85,'square',0.35,master);if(i%4===0)this.tone(bass[Math.floor(i/4)%bass.length],next,step*3.2,'triangle',0.9,master);if(i%2===1)this.tone(96,next,0.03,'square',0.08,master);next+=step;i++;}},80);
+    }catch(e){}
+  }
+  stopBgm(){clearInterval(this.bgmTimer);this.bgmTimer=null;if(this.bgmGain){try{this.bgmGain.disconnect();}catch(e){}this.bgmGain=null;}}
+  beep(type){
+    if(!this.state.sound)return;
+    try{const C=this.ctx();const seq=type==='ok'?[660,880,1175]:type==='ng'?[330,247]:type==='end'?[523,659,784,1046]:type==='tap'?[1320]:type==='ach'?[880,1175,1568]:[880];
+      seq.forEach((f,i)=>{const o=C.createOscillator(),gn=C.createGain();o.type='triangle';o.frequency.value=f;const t=C.currentTime+i*0.08;gn.gain.setValueAtTime(0.0001,t);gn.gain.exponentialRampToValueAtTime(0.12,t+0.01);gn.gain.exponentialRampToValueAtTime(0.0001,t+(type==='tap'?0.07:0.16));o.connect(gn).connect(C.destination);o.start(t);o.stop(t+0.2);});
+    }catch(e){}
+  }
+  persist(){const {screen,g,ev,res,prep,mini}=this.state;try{if(g&&['hub','shop','event','mini','result','route'].includes(screen))localStorage.setItem(SAVE_KEY,JSON.stringify({screen:screen==='mini'?'hub':screen,g,ev,res,prep,mini:null}));}catch(e){}}
+  commit(p){this.setState(p,()=>this.persist());}
+  eff(g,k){const o=OUTFITS.find(x=>x.id===g.outfit)||OUTFITS[0];return (g.stats[k]||0)+(o.bonus[k]||0);}
+  relOf(g,k){return g.rel[k]==null?0:g.rel[k];}
+  chance(g,ch){if(ch.auto&&this.relOf(g,ch.auto[0])>=ch.auto[1])return 1;if(!ch.stat)return 1;return clamp(0.3+this.eff(g,ch.stat)*0.06-(ch.dc||0)*0.08,0.05,0.95);}
+  needOK(g,n){if(!n)return true;if(n.met&&g.rel[n.met]==null)return false;if(n.rel&&this.relOf(g,n.rel[0])<n.rel[1])return false;if(n.flag&&!g.flags[n.flag])return false;if(n.noflag&&g.flags[n.noflag])return false;return true;}
+  addLog(g,tag,txt){g.log=[{tag,txt},...g.log].slice(0,30);}
+  fill(t,g){return (t||'').replace(/\{n\}/g,g.name);}
+  apply(g,eff,deltas){
+    const push=(label,v,good,str)=>{if(!v||!deltas)return;deltas.push({label,val:str||(v>0?'+'+v:''+v),bg:good?'oklch(0.93 0.05 165)':'oklch(0.93 0.05 25)',ink:good?'oklch(0.38 0.1 165)':'oklch(0.42 0.14 25)'});};
+    let fanGain=0;
+    if(eff.fan){let f=eff.fan;if(f>0){f=Math.round(f*(1+this.eff(g,'look')*0.04));if(g.buff){f=Math.round(f*1.5);g.buff=0;}}g.fans=Math.max(0,g.fans+f);fanGain=f;push('人氣',f,f>0);}
+    if(eff.m){g.money+=eff.m;push('存款',eff.m,eff.m>0,(eff.m>0?'+':'−')+'NT$'+fmt(Math.abs(eff.m)));}
+    if(eff.mt){const o=g.mental;g.mental=clamp(g.mental+eff.mt,0,100);push('精神',g.mental-o,eff.mt>0);}
+    if(eff.st){const o=g.study;g.study=clamp(g.study+eff.st,0,100);push('學業',g.study-o,eff.st>0);}
+    if(eff.buff){g.buff=1;}
+    Object.keys(SN).forEach(k=>{if(eff[k]){g.stats[k]=clamp(g.stats[k]+eff[k],0,15);push(SN[k],eff[k],eff[k]>0);}});
+    if(eff.rel)Object.keys(eff.rel).forEach(k=>{const o=this.relOf(g,k);const first=g.rel[k]==null;g.rel[k]=clamp(o+eff.rel[k],0,100);const d=g.rel[k]-o;const c=CHARS[k];
+      if(first)push(c.name,'',true,'初次見面');else if(d)push(c.name+(c.danger?'危險度':'好感'),d,c.danger?d<0:d>0);});
+    if(eff.flag)g.flags[eff.flag]=true;
+    return fanGain;
+  }
+  achPatch(g,extra){
+    const got=new Set(this.state.ach);const add=[];const t=(id,c)=>{if(c&&!got.has(id)){got.add(id);add.push(id);}};
+    if(g){t('first',g.shift>=1);t('jacky',this.relOf(g,'jacky')>=80);t('lulu',this.relOf(g,'lulu')>=80);t('creep',g.flags.creepDone);t('closet',OUTFITS.every(o=>g.owned.includes(o.id)));t('rich',g.money>=20000);t('love',g.flags.dating);}
+    if(extra)Object.keys(extra).forEach(k=>t(k,extra[k]));
+    if(!add.length)return{};
+    const ach=[...got];try{localStorage.setItem(ACH_KEY,JSON.stringify(ach));}catch(e){}
+    setTimeout(()=>this.beep('ach'),400);
+    return{ach,toast:{key:Date.now(),text:'成就解鎖：'+add.map(id=>ACH.find(a=>a[0]===id)[1]).join('、')}};
+  }
+  startGame=()=>{
+    const a=this.state.alloc;if(this.pool()-Object.values(a).reduce((x,y)=>x+y,0)>0)return;const rel={};Object.keys(CHARS).forEach(k=>rel[k]=null);rel.yuki=10;
+    const g={name:(this.state.name||'').trim()||NAMES[Math.floor(Math.random()*NAMES.length)],stats:{...a},fans:0,mental:70,study:60,money:3000,shift:0,route:null,used:[],log:[],rel,flags:{},outfit:'classic',owned:['classic'],buff:0,minis:[],lastMini:-9,shopOpen:false,bought:{}};
+    this.beep('click');if(this.state.music)this.startBgm();
+    this.commit({g,screen:'hub',prep:'none',ev:null,res:null,mini:null,hasSave:true,fx:null});
+  };
+  depart=()=>{
+    const s=this.state;const g=JSON.parse(JSON.stringify(s.g));
+    const p=PREPS.find(x=>x[0]===s.prep);
+    if(p&&p[0]!=='none'){this.apply(g,p[3]);this.addLog(g,'上班前',p[1]+'。');}
+    g.shift++;g.money+=1200;g.study=clamp(g.study-7,0,100);g.mental=clamp(g.mental-5,0,100);g.shopOpen=false;
+    const left=Object.keys(MINIS).filter(k=>!g.minis.includes(k));
+    const force=(g.shift===5&&g.minis.length<1)||(g.shift===9&&g.minis.length<2);
+    if(left.length&&g.shift>=2&&g.shift-g.lastMini>=2&&(force||Math.random()<0.28)){
+      let type=g.route==='idol'&&left.includes('rhythm')?'rhythm':g.route==='bar'&&left.includes('deliver')?'deliver':left[Math.floor(Math.random()*left.length)];
+      g.minis.push(type);g.lastMini=g.shift;this.beep('click');
+      return this.setState({g,mini:{type,key:Date.now()},screen:'mini',prep:'none',fx:null});
+    }
+    const phase=g.route||'early';
+    const cand=EVENTS.filter(e=>(e.pool===phase||e.pool==='any')&&!g.used.includes(e.id)&&this.needOK(g,e.need));
+    let pool=cand.length?cand:EVENTS.filter(e=>(e.pool==='early'||e.pool==='any')&&!g.used.includes(e.id)&&this.needOK(g,e.need));
+    if(!pool.length)pool=EVENTS.filter(e=>e.pool==='early');
+    const ws=pool.map(e=>e.need?2:e.pool===phase&&phase!=='early'?1.4:1);let r=Math.random()*ws.reduce((x,y)=>x+y,0);let ev=pool[pool.length-1];
+    for(let i=0;i<pool.length;i++){r-=ws[i];if(r<=0){ev=pool[i];break;}}
+    g.used.push(ev.id);this.beep('click');
+    this.commit({g,ev:{id:ev.id,life:false},screen:'event',prep:'none',fx:null,...this.achPatch(g)});
+  };
+  choose(i){
+    const s=this.state;const g=JSON.parse(JSON.stringify(s.g));const ev=EVENTS.find(e=>e.id===s.ev.id);const ch=ev.ch[i];
+    if(ch.cost){if(g.money<ch.cost)return;g.money-=ch.cost;}
+    const p=this.chance(g,ch);const auto=ch.auto&&this.relOf(g,ch.auto[0])>=ch.auto[1];const ok=auto||!ch.stat||Math.random()<p;const eff=ok?ch.ok:ch.ng;
+    const deltas=[];if(ch.cost)deltas.push({label:'存款',val:'−NT$'+fmt(ch.cost),bg:'oklch(0.93 0.05 25)',ink:'oklch(0.42 0.14 25)'});
+    const fan=this.apply(g,eff,deltas);
+    const who=CHARS[ev.who]?CHARS[ev.who].name:ev.who;
+    this.addLog(g,s.ev.life?'日常':'第'+g.shift+'班',`${who}｜${ch.t} → ${ch.stat||ch.auto?(ok?'成功':'翻車'):'就這樣'}`);
+    const bad=(eff.fan||0)<0||(eff.mt||0)<=-8;
+    const good=ch.stat||ch.auto?ok:!bad;
+    const odds=auto?`${CHARS[ch.auto[0]].name}好感 ≥ ${ch.auto[1]}，必定成功`:ch.stat?`${SN[ch.stat]}判定・成功率 ${Math.round(p*100)}%`:'';
+    const res={verdict:ch.stat||ch.auto?(ok?'成功！':'翻車……'):(bad?'嗯……':'好喔'),good,choice:'你選了：'+ch.t,text:this.fill(eff.txt,g),odds,deltas};
+    this.beep(good?'ok':'ng');
+    this.commit({g,res,screen:'result',fx:{key:Date.now(),good,fan},...this.achPatch(g)});
+  }
+  onMini=score=>{
+    const s=this.state;const g=JSON.parse(JSON.stringify(s.g));const M=MINIS[s.mini.type];
+    const eff={fan:Math.round(score*0.4),mt:score>=85?5:-3};if(s.mini.type==='deliver')eff.m=score*10;
+    const deltas=[];const fan=this.apply(g,eff,deltas);
+    const txt=M.txt.find(x=>score>=x[0])[1];
+    this.addLog(g,'第'+g.shift+'班',`小遊戲「${M.title}」→ ${score} 分`);
+    const good=score>=50;
+    const res={verdict:score>=85?'完美！':score>=50?'不錯！':'加油……',good,choice:M.title,text:txt,odds:'得分 '+score,deltas};
+    this.beep(good?'ok':'ng');
+    this.commit({g,res,screen:'result',mini:null,fx:{key:Date.now(),good,fan},...this.achPatch(g,{[s.mini.type]:score>=85})});
+  };
+  nextState(g,afterLife){
+    if(g.study<=0)return{end:'expelled'};
+    if(g.mental<=0)return{end:'burnout'};
+    if(g.shift>=this.maxS()){
+      const r=ROUTES[g.route||'cafe'];const okStat=!r.stat||this.eff(g,r.stat)>=8;const win=g.fans>=this.goal()&&okStat;
+      return{end:(g.route||'cafe')==='cafe'?(win?'kanban':'cafeflop'):g.route==='bar'?(win?'redcard':'barflop'):(win?'idol':'idolflop')};
+    }
+    if(!g.route&&g.shift>=Math.ceil(this.maxS()/2))return{route:true};
+    return{};
+  }
+  goContinue=()=>{
+    const s=this.state;const g=JSON.parse(JSON.stringify(s.g));const n=this.nextState(g);
+    if(n.end)return this.finish(g,n.end);
+    if(n.route){this.beep('click');return this.commit({g,screen:'route',res:null,ev:null,fx:null});}
+    const wasLife=s.ev&&s.ev.life;
+    if(!wasLife){
+      if(g.shift%3===0)g.shopOpen=true;
+      let life=null;
+      if(g.shift===4||g.shift===8)life=EVENTS.find(e=>e.id==='rent');
+      else if(Math.random()<0.4){const lp=EVENTS.filter(e=>e.pool==='life'&&!g.used.includes(e.id)&&this.needOK(g,e.need));
+        const arc=EVENTS.filter(e=>e.place==='life'&&e.pool==='any'&&e.need&&!g.used.includes(e.id)&&this.needOK(g,e.need));
+        const all=[...lp,...arc];if(all.length)life=all[Math.floor(Math.random()*all.length)];}
+      if(life){if(life.id!=='rent')g.used.push(life.id);this.beep('click');return this.commit({g,ev:{id:life.id,life:true},screen:'event',res:null,fx:null});}
+    }
+    this.beep('click');
+    this.commit({g,screen:'hub',res:null,ev:null,fx:null});
+  };
+  pickRoute(id){
+    const g=JSON.parse(JSON.stringify(this.state.g));g.route=id;
+    this.addLog(g,'轉折','選擇了'+ROUTES[id].name+'，目標：'+ROUTES[id].target+'。');
+    this.beep('ok');this.commit({g,screen:'hub',fx:{key:Date.now(),good:true,fan:0}});
+  }
+  buy(item){
+    const g=JSON.parse(JSON.stringify(this.state.g));if(g.money<item.price)return;g.money-=item.price;this.apply(g,item.eff);g.bought[item.id]=(g.bought[item.id]||0)+1;
+    this.addLog(g,'商店','買了'+item.name+'。');this.beep('ok');this.commit({g,...this.achPatch(g)});
+  }
+  outfitAct(o){
+    const g=JSON.parse(JSON.stringify(this.state.g));
+    if(!g.owned.includes(o.id)){if(g.money<o.price)return;g.money-=o.price;g.owned.push(o.id);this.addLog(g,'商店','買了'+o.name+'。');}
+    g.outfit=o.id;this.beep('ok');this.commit({g,...this.achPatch(g)});
+  }
+  finish(g,key){
+    const win=['kanban','redcard','idol'].includes(key);
+    const extra={dream:win,dark:key==='expelled'||key==='burnout',scholar:g.study>=80&&!['expelled','burnout'].includes(key)};
+    const best=Math.max(this.state.best,g.fans);const newBest=g.fans>this.state.best&&g.fans>0;const t=Date.now();
+    const board=[...this.state.board,{name:g.name,fans:g.fans,ending:ENDINGS[key].title,t}].sort((a,b)=>b.fans-a.fans).slice(0,20);
+    try{localStorage.setItem(BEST_KEY,String(best));localStorage.setItem(BOARD_KEY,JSON.stringify(board));localStorage.removeItem(SAVE_KEY);}catch(e){}
+    this.beep('end');
+    this.setState({g,ending:{key,t},screen:'ending',best,board,newBest,hasSave:false,copied:false,fx:{key:t,good:win||key==='cafeflop',fan:0},...this.achPatch(g,extra)});
+  }
+  renderVals(){
+    const s=this.state,g=s.g,a=s.alloc;
+    const remaining=this.pool()-Object.values(a).reduce((x,y)=>x+y,0);
+    const showOdds=this.props.showOdds??true;
+    const inGame=['hub','shop','event','mini','result','route'].includes(s.screen)&&!!g;
+    const v={
+      isTitle:s.screen==='title',isCreate:s.screen==='create',isEnding:s.screen==='ending',isBoard:s.screen==='board',isAch:s.screen==='ach',
+      inGame,isHub:s.screen==='hub',isShop:s.screen==='shop',isEvent:s.screen==='event',isMini:s.screen==='mini',isResult:s.screen==='result',isRoute:s.screen==='route',
+      soundLabel:s.sound?'音效 開':'音效 關',musicLabel:s.music?'音樂 開':'音樂 關',hasSave:s.hasSave,saveInfo:s.saveInfo,best:s.best,goal:this.goal(),maxShifts:this.maxS(),
+      achCount:`${s.ach.length} / ${ACH.length}`,
+      fx:s.fx?h(Fx,{key:s.fx.key,good:s.fx.good,fan:s.fx.fan}):null,
+      toast:s.toast?h(Toast,{key:s.toast.key,text:s.toast.text}):null,
+      toggleSound:()=>{const n=!s.sound;try{localStorage.setItem(SOUND_KEY,n?'1':'0');}catch(e){}this.setState({sound:n},()=>this.beep('click'));},
+      toggleMusic:()=>{const n=!s.music;try{localStorage.setItem(MUSIC_KEY,n?'1':'0');}catch(e){}if(n)this.startBgm();else this.stopBgm();this.setState({music:n});},
+      goTitle:()=>{this.persist();let has=s.hasSave,info=s.saveInfo;if(inGame){has=true;info=`${g.name}・第 ${g.shift} 班`;}this.setState({screen:'title',hasSave:has,saveInfo:info,fx:null});},
+      goBoard:()=>{this.persist();this.setState({prevScreen:['board','ach'].includes(s.screen)?s.prevScreen:(s.screen==='mini'?'hub':s.screen),screen:'board',fx:null});},
+      goAch:()=>{this.persist();this.setState({prevScreen:['board','ach'].includes(s.screen)?s.prevScreen:(s.screen==='mini'?'hub':s.screen),screen:'ach',fx:null});},
+      boardBack:()=>this.setState({screen:s.prevScreen||'title'}),
+      goCreate:()=>{this.beep('click');this.setState({screen:'create',fx:null});},
+      loadSave:()=>{try{const sv=JSON.parse(localStorage.getItem(SAVE_KEY));if(sv&&sv.g)this.setState({...sv,fx:null});}catch(e){}},
+      name:s.name,onName:e=>this.setState({name:e.target.value}),
+      randName:()=>this.setState({name:NAMES[Math.floor(Math.random()*NAMES.length)]}),
+      remaining,
+      allocRows:STATS.map(([k,label,desc])=>({label,desc,val:a[k],decOp:a[k]>0?1:0.35,incOp:remaining>0&&a[k]<8?1:0.35,
+        dec:()=>{if(a[k]>0)this.setState({alloc:{...a,[k]:a[k]-1}});},
+        inc:()=>{if(remaining>0&&a[k]<8)this.setState({alloc:{...a,[k]:a[k]+1}});}})),
+      randAlloc:()=>{const n={look:0,perform:0,social:0,grit:0};const ks=Object.keys(n);let r=this.pool(),guard=0;while(r>0&&guard<400){const k=ks[Math.floor(Math.random()*4)];if(n[k]<8){n[k]++;r--;}guard++;}this.beep('click');this.setState({alloc:n});},
+      startGame:this.startGame,startOp:remaining>0?0.45:1,startLabel:remaining>0?`還有 ${remaining} 點沒配`:'換上女僕裝',
+      achRows:ACH.map(([id,name,desc])=>{const got=s.ach.includes(id);return{name:got?name:'？？？',desc,badge:got?'已解鎖':'未解鎖',bg:got?'oklch(0.9 0.06 355)':'oklch(0.95 0.01 350)',ink:got?'oklch(0.36 0.1 355)':'oklch(0.5 0.02 350)'};})
+    };
+    if(g){
+      const goal=this.goal();const O=OUTFITS.find(x=>x.id===g.outfit)||OUTFITS[0];
+      const title=g.fans>=goal?(g.route?ROUTES[g.route].target:'傳說女僕'):g.fans>=160?'人氣女僕':g.fans>=60?'見習女僕':'新人女僕';
+      Object.assign(v,{
+        pName:g.name,initial:g.name.slice(0,1),titleName:title,routeName:g.route?ROUTES[g.route].name:'咖啡廳新人期',fans:g.fans,
+        outfitName:O.name,outfitTint:tint(O.hue),outfitInk:ink(O.hue),hasBuff:!!g.buff,
+        shiftDots:Array.from({length:this.maxS()},(_,i)=>({bg:i<g.shift?PINK:(i===Math.ceil(this.maxS()/2)-1?'oklch(0.85 0.08 355)':'oklch(0.93 0.02 350)')})),
+        mental:g.mental,mentalColor:g.mental<=25?BAD:'oklch(0.55 0.12 200)',study:g.study,studyColor:g.study<=25?BAD:'oklch(0.55 0.12 150)',
+        moneyLabel:(g.money<0?'−':'')+'NT$'+fmt(Math.abs(g.money)),moneyColor:g.money<0?BAD:'oklch(0.3 0.05 350)',
+        statChips:STATS.map(([k,label])=>{const b=O.bonus[k]||0;return{label,val:b?`${g.stats[k]}+${b}`:g.stats[k]};}),
+        shiftNo:g.shift+1,log:g.log,noLog:!g.log.length,shopOpen:!!g.shopOpen,
+        goShop:()=>{this.beep('click');this.commit({screen:'shop'});},leaveShop:()=>{this.beep('click');this.commit({screen:'hub'});},
+        preps:PREPS.map(([id,label,desc])=>{const sel=s.prep===id;return{label,desc,bg:sel?SOFT:CARD,bd:sel?PINK:LINE,onClick:()=>{this.beep('click');this.commit({prep:id});}};}),
+        wardrobe:OUTFITS.filter(o=>g.owned.includes(o.id)).map(o=>({name:o.name,bonus:o.txt,tint:tint(o.hue),ink:ink(o.hue),bg:g.outfit===o.id?SOFT:CARD,bd:g.outfit===o.id?PINK:LINE,onClick:()=>this.outfitAct(o)})),
+        shopItems:SHOP.map(it=>{const dis=g.money<it.price;return{name:it.name,desc:it.desc,btn:dis?`錢不夠（NT$${fmt(it.price)}）`:`購買 NT$${fmt(it.price)}`,disabled:dis,op:dis?0.45:1,onClick:()=>this.buy(it)};}),
+        outfitItems:OUTFITS.map(o=>{const own=g.owned.includes(o.id);const on=g.outfit===o.id;const dis=on||(!own&&g.money<o.price);
+          return{name:o.name,bonus:o.txt,tint:tint(o.hue),ink:ink(o.hue),btn:on?'穿著中':own?'換上':(g.money<o.price?`錢不夠（NT$${fmt(o.price)}）`:`購買 NT$${fmt(o.price)}`),disabled:dis,op:dis&&!on?0.5:1,onClick:()=>{if(!dis)this.outfitAct(o);}};}),
+        depart:this.depart,
+        routeText:`「${g.name}，做了 ${g.shift} 個班，你也該想想之後的路了。有人來挖角，你要不要聽聽看？」`,
+        routes:Object.entries(ROUTES).map(([id,r])=>{const val=r.stat?this.eff(g,r.stat):0;const fit=!r.stat?'誰都可以':(val>=8?`${SN[r.stat]} ${val}・適合你`:`目前${SN[r.stat]} ${val}`);return{label:r.label,desc:r.desc,req:r.req,fit,tint:tint(r.hue),ink:ink(r.hue),onClick:()=>this.pickRoute(id)};}),
+        people:Object.entries(CHARS).map(([k,c])=>{const met=g.rel[k]!=null;const val=this.relOf(g,k);
+          const tier=c.danger?(g.flags.creepDone?'已擊退':val>=30?'很危險':'可疑'):(val>=80?'超級好':val>=50?'好朋友':val>=20?'熟識':'點頭之交');
+          return{name:met?c.name:'？？？',initial:met?c.init:'?',label:met?`${tier} ${val}`:'尚未登場',pct:met?val:0,op:met?1:0.5,tint:met?tint(c.hue):'oklch(0.92 0.01 350)',ink:met?ink(c.hue):'oklch(0.5 0.02 350)',bar:c.danger?BAD:ink(c.hue)};})
+      });
+      const sc=SCENE[(s.mini&&MINIS[s.mini.type].place)||(s.ev&&EVENTS.find(e=>e.id===s.ev.id)?.place)||'cafe'];
+      Object.assign(v,{sceneBg:sc.bg,sceneChipBg:sc.chip,sceneChipInk:sc.ink,evShift:g.shift});
+      if(s.ev){
+        const ev=EVENTS.find(e=>e.id===s.ev.id);const c=CHARS[ev.who];const hu=c?c.hue:(HUE[ev.tag]??355);
+        const rv=c?this.relOf(g,ev.who):null;
+        Object.assign(v,{evTint:tint(hu),evInk:ink(hu),evWho:c?c.name:ev.who,evTag:c?c.role:ev.tag,evInitial:c?c.init:ev.who.slice(0,1),
+          evPlace:(s.ev.life?'日常・':'')+SCENE[ev.place].name+(s.ev.life?'':'・第 '+g.shift+' 班'),
+          evRel:c?(g.rel[ev.who]==null?'初次見面':(c.danger?'危險度 ':'好感 ')+rv):(ev.tag||'路人'),
+          evText:this.fill(ev.text,g),
+          choices:ev.ch.map((ch,i)=>{const dis=!!ch.cost&&g.money<ch.cost;const parts=[];const auto=ch.auto&&this.relOf(g,ch.auto[0])>=ch.auto[1];
+            if(auto)parts.push(`${CHARS[ch.auto[0]].name}好感夠高・必定成功`);
+            else{if(ch.auto)parts.push(`${CHARS[ch.auto[0]].name}好感 ${ch.auto[1]} 以上必定成功`);if(ch.stat)parts.push(showOdds?`${SN[ch.stat]}判定・成功率 ${Math.round(this.chance(g,ch)*100)}%`:`${SN[ch.stat]}判定`);}
+            if(ch.cost)parts.push(dis?`需要 NT$${fmt(ch.cost)}（錢不夠）`:`NT$${fmt(ch.cost)}`);
+            return{label:ch.t,meta:parts.join('｜')||'不用判定',disabled:dis,op:dis?0.45:1,onClick:()=>{if(!dis)this.choose(i);}};})});
+      }
+      if(s.mini){
+        const Comp=MINI_COMP[s.mini.type];
+        Object.assign(v,{miniTitle:MINIS[s.mini.type].title,minigame:h(Comp,{key:s.mini.key,onDone:this.onMini,beep:t=>this.beep(t)})});
+      }
+      if(s.res){
+        const n=this.nextState(g);
+        Object.assign(v,{resVerdict:s.res.verdict,resColor:s.res.good?GOOD:BAD,resOdds:s.res.odds,resChoice:s.res.choice,resText:s.res.text,resDeltas:s.res.deltas,goContinue:this.goContinue,continueLabel:n.end?'看結局':n.route?'下班（店長找你）':(s.ev&&s.ev.life?'回到店裡':'下班')});
+      }
+    }
+    if(s.screen==='ending'&&s.ending&&g){
+      const En=ENDINGS[s.ending.key];const routeName=g.route?ROUTES[g.route].name:'咖啡廳新人期';
+      const bond=Object.entries(CHARS).filter(([k,c])=>!c.danger&&g.rel[k]!=null&&k!=='yuki').sort((x,y)=>this.relOf(g,y[0])-this.relOf(g,x[0]))[0];
+      const bondTxt=bond?`${bond[1].name} ${this.relOf(g,bond[0])}`:'獨行女僕';
+      const share=`【女僕人生模擬器】${g.name}\n結局：${En.title}（${routeName}）\n人氣 ${g.fans}｜上了 ${g.shift} 班｜存款 NT$${fmt(g.money)}\n最好的關係：${bondTxt}\n「${En.ep}」`;
+      Object.assign(v,{endTitle:En.title,endText:En.text,endTint:tint(En.hue),endInk:ink(En.hue),endName:g.name,endRoute:routeName,endFans:g.fans,endShifts:g.shift,endMoney:(g.money<0?'−':'')+'NT$'+fmt(Math.abs(g.money)),endBond:bondTxt,endEpitaph:En.ep,isNewBest:s.newBest,
+        copyLabel:s.copied?'已複製！':'複製分享文字',
+        onCopy:()=>{try{navigator.clipboard.writeText(share).then(()=>this.setState({copied:true}),()=>this.setState({copied:true}));}catch(e){this.setState({copied:true});}}});
+    }
+    const lastT=s.ending&&s.ending.t;
+    const all=[...FAKE.map(([name,fans,ending])=>({name,fans,ending})),...s.board.map(b=>({...b,mine:true}))].sort((x,y)=>y.fans-x.fans).slice(0,12);
+    v.boardRows=all.map((b,i)=>({rank:i+1,name:b.mine?b.name+'（你）':b.name,ending:b.ending,fans:b.fans,bg:b.mine?(b.t===lastT?'oklch(0.9 0.06 355)':SOFT):'oklch(0.975 0.012 350)'}));
+    return v;
+  }
+}
+</script>
+</body>
+</html>
